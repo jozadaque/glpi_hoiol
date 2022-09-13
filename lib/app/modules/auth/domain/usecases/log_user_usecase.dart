@@ -7,10 +7,10 @@ abstract class ILogUserUsecase {
   Future<Either<Exception, Unit>> logout(String authToken);
 }
 
-class LogUserUsecase extends ILogUserUsecase {
+class LogUserUsecaseImpl extends ILogUserUsecase {
   final IlogUserRepository repository;
 
-  LogUserUsecase(this.repository);
+  LogUserUsecaseImpl(this.repository);
 
   @override
   Future<Either<Exception, String>> login(Params params) async {
