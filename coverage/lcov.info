@@ -1,3 +1,8 @@
+SF:lib/app/modules/auth/domain/types/params.dart
+DA:5,1
+LF:1
+LH:1
+end_of_record
 SF:lib/app/modules/auth/domain/usecases/log_user_usecase.dart
 DA:13,1
 DA:15,1
@@ -14,11 +19,6 @@ DA:37,2
 DA:40,2
 LF:13
 LH:13
-end_of_record
-SF:lib/app/modules/auth/domain/types/params.dart
-DA:5,1
-LF:1
-LH:1
 end_of_record
 SF:lib/app/app_widget.dart
 DA:4,1
