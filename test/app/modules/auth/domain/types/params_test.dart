@@ -5,6 +5,6 @@ void main() {
   test('Params: Should return a params object', () {
     Params object = Params(password: 'password', user: 'user');
 
-    expect(object is Params, true);
+    expect(object.password == 'password' && object.user == 'user', true);
   });
 }
