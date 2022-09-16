@@ -9,14 +9,22 @@ class LogUserRepositoryImpl implements ILogUserDatasource {
 
   @override
   Future<Either<Exception, String?>> login(Params params) async {
-    final result = await datasource.login(params);
-    return result;
+    try {
+      final result = await datasource.login(params);
+      return result;
+    } catch (e) {
+      return left(Exception());
+    }
   }
 
   @override
   Future<Either<Exception, Unit>> logout(String authToken) async {
-    final result = await datasource.logout(authToken);
+    try {
+      final result = await datasource.logout(authToken);
 
-    return result;
+      return result;
+    } catch (e) {
+      return left(Exception());
+    }
   }
 }

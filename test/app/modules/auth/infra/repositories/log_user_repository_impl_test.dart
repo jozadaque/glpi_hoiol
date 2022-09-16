@@ -22,8 +22,6 @@ void main() {
 
   group('Success LogUserRepositoryImpl:', () {
     test('Should return a String when the login method is call.', () async {
-      when(() => params.user).thenReturn('username');
-      when(() => params.password).thenReturn('password');
       when(() => datasource.login(params))
           .thenAnswer((_) async => const Right('anything'));
 
