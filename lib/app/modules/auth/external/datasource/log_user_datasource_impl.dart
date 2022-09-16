@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:glpi_hoiol/app/modules/auth/domain/types/params.dart';
+
 import 'package:glpi_hoiol/app/modules/auth/infra/datasources/i_log_user_datasource.dart';
 
 class LogUserDatasourceImpl implements ILogUserDatasource {
@@ -14,20 +15,16 @@ class LogUserDatasourceImpl implements ILogUserDatasource {
 
   @override
   Future<String> login(Params params) async {
-    try {
-      String basicauth =
-          base64Encode(utf8.encode('${params.user}:${params.password}'));
+    String basicauth =
+        base64Encode(utf8.encode('${params.user}:${params.password}'));
 
-      final response = await dio.get(url,
-          options: Options(headers: {'Authorization': 'Basic $basicauth'}));
+    final response = await dio.get(url,
+        options: Options(headers: {'Authorization': 'Basic $basicauth'}));
 
+    if (response.statusCode == 200) {
       return response.data['session_token'];
-    } on DioError catch (e) {
-      if (e.response != null) {
-        return e.message;
-      } else {
-        return e.message;
-      }
+    } else {
+      return throw Exception();
     }
   }
 
@@ -35,17 +32,13 @@ class LogUserDatasourceImpl implements ILogUserDatasource {
   Future<String> logout(
     String authToken,
   ) async {
-    try {
-      final response = await dio.get(url,
-          options: Options(headers: {'Session-Token': authToken}));
+    final response = await dio.get(url,
+        options: Options(headers: {'Session-Token': authToken}));
 
+    if (response.statusCode == 200) {
       return response.statusCode.toString();
-    } on DioError catch (e) {
-      if (e.response != null) {
-        return e.response!.statusCode.toString();
-      } else {
-        return e.response!.statusCode.toString();
-      }
+    } else {
+      throw Exception();
     }
   }
 }

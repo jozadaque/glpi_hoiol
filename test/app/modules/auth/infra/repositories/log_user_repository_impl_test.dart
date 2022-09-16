@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:glpi_hoiol/app/modules/auth/infra/repositories/log_user_repository_impl.dart';
 import 'package:mocktail/mocktail.dart';
