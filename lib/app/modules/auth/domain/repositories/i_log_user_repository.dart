@@ -4,5 +4,5 @@ import '../types/params.dart';
 
 abstract class IlogUserRepository {
   Future<Either<Exception, String>> login(Params params);
-  Future<Either<Exception, Unit>> logout(String authToken);
+  Future<Either<Exception, String>> logout(String authToken);
 }

@@ -9,14 +9,12 @@ void main() {
   late ILogUserUsecase usecase;
   late MockILogUserRepository repository;
   late MockParams params;
-  late MockUnit unit;
   late MockException exception;
 
   setUp(() {
     repository = MockILogUserRepository();
     usecase = LogUserUsecaseImpl(repository);
     params = MockParams();
-    unit = MockUnit();
     exception = MockException();
   });
 
@@ -32,12 +30,12 @@ void main() {
       expect(result.fold((l) => l, (r) => r), isA<String>());
     });
 
-    test('Should return a Unit when logout method is call.', () async {
+    test('Should return a String when logout method is call.', () async {
       when(() => repository.logout('authToken'))
-          .thenAnswer((_) async => Right(unit));
+          .thenAnswer((_) async => const Right(''));
       final result = await usecase.logout('authToken');
 
-      expect(result.fold((l) => l, (r) => r), isA<Unit>());
+      expect(result.fold((l) => l, (r) => r), isA<String>());
     });
   });
 
@@ -77,7 +75,7 @@ void main() {
 
     test('Should return an error when auth_token is empty.', () async {
       when(() => repository.logout('12345'))
-          .thenAnswer((_) async => Right(unit));
+          .thenAnswer((_) async => const Right('anything'));
 
       final result = await usecase.logout('');
 

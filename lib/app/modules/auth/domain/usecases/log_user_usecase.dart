@@ -4,7 +4,7 @@ import '../types/params.dart';
 
 abstract class ILogUserUsecase {
   Future<Either<Exception, String>> login(Params params);
-  Future<Either<Exception, Unit>> logout(String authToken);
+  Future<Either<Exception, String>> logout(String authToken);
 }
 
 class LogUserUsecaseImpl extends ILogUserUsecase {
@@ -32,7 +32,7 @@ class LogUserUsecaseImpl extends ILogUserUsecase {
   }
 
   @override
-  Future<Either<Exception, Unit>> logout(String authToken) async {
+  Future<Either<Exception, String>> logout(String authToken) async {
     if (authToken.isEmpty) {
       return left(Exception());
     }

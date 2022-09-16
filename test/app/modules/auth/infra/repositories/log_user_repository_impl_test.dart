@@ -8,51 +8,45 @@ import '../../../../share/mocks/mocks.dart';
 void main() {
   late MockParams params;
   late MockLogUserDatasource datasource;
-  late MockUnit unit;
-  late MockException exception;
   late LogUserRepositoryImpl repository;
 
   setUp(() {
     params = MockParams();
     datasource = MockLogUserDatasource();
-    unit = MockUnit();
-    exception = MockException();
     repository = LogUserRepositoryImpl(datasource);
   });
 
   group('Success LogUserRepositoryImpl:', () {
     test('Should return a String when the login method is call.', () async {
-      when(() => datasource.login(params))
-          .thenAnswer((_) async => const Right('anything'));
+      when(() => datasource.login(params)).thenAnswer((_) async => 'anything');
 
       final result = await repository.login(params);
 
       expect(result.fold((l) => l, (r) => r), isA<String>());
     });
 
-    test('Should return Unit when the logout method is call.', () async {
-      when(() => datasource.logout('anything'))
-          .thenAnswer((_) async => Right(unit));
+    test('Should return String when the logout method is call.', () async {
+      when(() => datasource.logout('anything')).thenAnswer((_) async => '200');
 
       final result = await repository.logout('anything');
 
-      expect(result.fold((l) => l, (r) => r), isA<Unit>());
+      expect(result.fold((l) => l, (r) => r), isA<String>());
     });
   });
 
   group('Fail LogUserRepositoryImpl:', () {
     test('Should return a Exception to when login return a Left ', () async {
-      when(() => datasource.login(params))
-          .thenAnswer((_) async => Left(exception));
-      final result = await datasource.login(params);
+      when(() => datasource.login(params)).thenThrow('throwable');
+
+      final result = await repository.login(params);
 
       expect(result.fold((l) => l, (r) => r), isA<Exception>());
     });
 
     test('Should return a Exception when logout return a Left ', () async {
-      when(() => datasource.logout('anything'))
-          .thenAnswer((_) async => Left(exception));
-      final result = await datasource.logout('anything');
+      when(() => datasource.logout('anything')).thenThrow('400');
+
+      final result = await repository.logout('anything');
 
       expect(result.fold((l) => l, (r) => r), isA<Exception>());
     });
