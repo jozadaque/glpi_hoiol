@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:glpi_hoiol/app/modules/auth/domain/usecases/log_user_usecase.dart';
+import 'package:glpi_hoiol/app/modules/auth/exceptions/log_user_exception.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../../share/mocks/mocks.dart';
@@ -48,7 +49,7 @@ void main() {
 
       final result = await usecase.login(params);
 
-      expect(result.fold((l) => l, (r) => r), isA<Exception>());
+      expect(result.fold((l) => l, (r) => r), isA<LoginException>());
     });
 
     test('Should return Exception when password is empty.', () async {
@@ -59,7 +60,7 @@ void main() {
 
       final result = await usecase.login(params);
 
-      expect(result.fold((l) => l, (r) => r), isA<Exception>());
+      expect(result.fold((l) => l, (r) => r), isA<PasswordException>());
     });
 
     test('should return an error when the password is less than 4.', () async {
@@ -70,7 +71,7 @@ void main() {
 
       final result = await usecase.login(params);
 
-      expect(result.fold((l) => l, (r) => r), isA<Exception>());
+      expect(result.fold((l) => l, (r) => r), isA<PasswordException>());
     });
 
     test('Should return an error when auth_token is empty.', () async {
@@ -79,16 +80,16 @@ void main() {
 
       final result = await usecase.logout('');
 
-      expect(result.fold((l) => l, (r) => r), isA<Exception>());
+      expect(result.fold((l) => l, (r) => r), isA<TokenException>());
     });
 
     test('should return an error when the auth_token is incorrect. ', () async {
       when(() => repository.logout('authToken'))
-          .thenAnswer((_) async => Left(exception));
+          .thenAnswer((_) async => Left(TokenException()));
 
       final result = await usecase.logout('authToken');
 
-      expect(result.fold((l) => l, (r) => r), isA<Exception>());
+      expect(result.fold((l) => l, (r) => r), isA<TokenException>());
     });
   });
 }

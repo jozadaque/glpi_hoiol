@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:glpi_hoiol/app/modules/auth/domain/repositories/i_log_user_repository.dart';
+import 'package:glpi_hoiol/app/modules/auth/exceptions/log_user_exception.dart';
 import '../types/params.dart';
 
 abstract class ILogUserUsecase {
@@ -15,15 +16,15 @@ class LogUserUsecaseImpl extends ILogUserUsecase {
   @override
   Future<Either<Exception, String>> login(Params params) async {
     if (params.user.isEmpty) {
-      return left(Exception());
+      return left(LoginException());
     }
 
     if (params.password.isEmpty) {
-      return left(Exception());
+      return left(PasswordException());
     }
 
     if (params.password.length < 4) {
-      return left(Exception());
+      return left(PasswordException());
     }
 
     final result = await repository.login(params);
@@ -34,7 +35,7 @@ class LogUserUsecaseImpl extends ILogUserUsecase {
   @override
   Future<Either<Exception, String>> logout(String authToken) async {
     if (authToken.isEmpty) {
-      return left(Exception());
+      return left(TokenException());
     }
 
     final result = await repository.logout(authToken);
