@@ -1,95 +1,40 @@
-import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:glpi_hoiol/app/modules/auth/domain/usecases/log_user_usecase.dart';
-import 'package:glpi_hoiol/app/modules/auth/exceptions/log_user_exception.dart';
+import 'package:glpi_hoiol/app/modules/auth/external/datasource/log_user_datasource_impl.dart';
+import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../../share/mocks/mocks.dart';
 
 void main() {
-  late ILogUserUsecase usecase;
-  late MockILogUserRepository repository;
+  late Dio dio;
+  late LogUserDatasourceImpl datasource;
   late MockParams params;
-  late MockException exception;
+  late DioAdapter dioAdapter;
 
   setUp(() {
-    repository = MockILogUserRepository();
-    usecase = LogUserUsecaseImpl(repository);
+    dio = Dio();
+    dioAdapter = DioAdapter(dio: dio);
     params = MockParams();
-    exception = MockException();
   });
 
-  group('Success LogUserUsecase:', () {
-    test('Should return String when login method is call.', () async {
-      when(() => params.user).thenReturn('usuario');
-      when(() => params.password).thenReturn('12345');
-      when((() => repository.login(params)))
-          .thenAnswer((_) async => const Right('anything'));
+  group('Success LogUserDatasourceImpl:', () {
+    test('Should return a String when login method is called', () async {
+      dio.httpClientAdapter = dioAdapter;
 
-      final result = await usecase.login(params);
+      when(() => params.user).thenReturn('user');
+      when(() => params.password).thenReturn('passs');
 
-      expect(result.fold((l) => l, (r) => r), isA<String>());
-    });
+      dioAdapter.onGet(
+          'path',
+          (request) => request.reply(200, {'session_token': 'dsdsdsdsdsdsdsf'},
+              delay: const Duration(seconds: 1)));
 
-    test('Should return a String when logout method is call.', () async {
-      when(() => repository.logout('authToken'))
-          .thenAnswer((_) async => const Right(''));
-      final result = await usecase.logout('authToken');
+      datasource = LogUserDatasourceImpl(dio: dio, url: 'path');
 
-      expect(result.fold((l) => l, (r) => r), isA<String>());
-    });
-  });
+      final result = await datasource.login(params);
 
-  group('Fail LogUserUsecase:', () {
-    test('Should return a Exception when username is empty.', () async {
-      when(() => params.user).thenReturn('');
-      when(() => params.password).thenReturn('12345');
-      when((() => repository.login(params)))
-          .thenAnswer((_) async => const Right('anything'));
-
-      final result = await usecase.login(params);
-
-      expect(result.fold((l) => l, (r) => r), isA<LoginException>());
-    });
-
-    test('Should return Exception when password is empty.', () async {
-      when(() => params.user).thenReturn('username');
-      when(() => params.password).thenReturn('');
-      when(() => repository.login(params))
-          .thenAnswer((_) async => const Right('anythig'));
-
-      final result = await usecase.login(params);
-
-      expect(result.fold((l) => l, (r) => r), isA<PasswordException>());
-    });
-
-    test('should return an error when the password is less than 4.', () async {
-      when(() => params.user).thenReturn('usuario');
-      when(() => params.password).thenReturn('123');
-      when(() => repository.login(params))
-          .thenAnswer((_) async => right('aynthing'));
-
-      final result = await usecase.login(params);
-
-      expect(result.fold((l) => l, (r) => r), isA<PasswordException>());
-    });
-
-    test('Should return an error when auth_token is empty.', () async {
-      when(() => repository.logout('12345'))
-          .thenAnswer((_) async => const Right('anything'));
-
-      final result = await usecase.logout('');
-
-      expect(result.fold((l) => l, (r) => r), isA<TokenException>());
-    });
-
-    test('should return an error when the auth_token is incorrect. ', () async {
-      when(() => repository.logout('authToken'))
-          .thenAnswer((_) async => Left(TokenException()));
-
-      final result = await usecase.logout('authToken');
-
-      expect(result.fold((l) => l, (r) => r), isA<TokenException>());
+      expect(result, isA<String>());
     });
   });
 }
