@@ -22,8 +22,8 @@ void main() {
     test('Should return a String when login method is called', () async {
       dio.httpClientAdapter = dioAdapter;
 
-      when(() => params.user).thenReturn('jozadaque_sousa');
-      when(() => params.password).thenReturn('@Daque15');
+      when(() => params.user).thenReturn('user');
+      when(() => params.password).thenReturn('passs');
 
       dioAdapter.onGet(
           'path',
