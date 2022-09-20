@@ -10,23 +10,16 @@ void main() {
   late Dio dio;
   late LogUserDatasourceImpl datasource;
   late MockParams params;
-
-  late MockResponse response;
-
-  //final dio = Dio();
   late DioAdapter dioAdapter;
 
   setUp(() {
     dio = Dio();
-
     dioAdapter = DioAdapter(dio: dio);
-
     params = MockParams();
-    response = MockResponse();
   });
 
   group('Success LogUserDatasourceImpl:', () {
-    test('Should return a String', () async {
+    test('Should return a String when login method is called', () async {
       dio.httpClientAdapter = dioAdapter;
 
       when(() => params.user).thenReturn('jozadaque_sousa');
