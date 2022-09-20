@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dio/native_imp.dart';
 import 'package:glpi_hoiol/app/modules/auth/domain/repositories/i_log_user_repository.dart';
 import 'package:glpi_hoiol/app/modules/auth/domain/types/params.dart';
 import 'package:glpi_hoiol/app/modules/auth/domain/usecases/log_user_usecase.dart';
@@ -15,4 +16,4 @@ class MockException extends Mock implements Exception {}
 
 class MockLogUserDatasource extends Mock implements ILogUserDatasource {}
 
-class MockDio extends Mock implements Dio {}
+class MockDio extends Mock implements DioForNative {}
