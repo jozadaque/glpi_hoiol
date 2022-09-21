@@ -10,13 +10,11 @@ void main() {
   late ILogUserUsecase usecase;
   late MockILogUserRepository repository;
   late MockParams params;
-  late MockException exception;
 
   setUp(() {
     repository = MockILogUserRepository();
     usecase = LogUserUsecaseImpl(repository);
     params = MockParams();
-    exception = MockException();
   });
 
   group('Success LogUserUsecase:', () {

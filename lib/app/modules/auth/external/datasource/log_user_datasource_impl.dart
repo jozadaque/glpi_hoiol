@@ -23,6 +23,10 @@ class LogUserDatasourceImpl implements ILogUserDatasource {
 
     if (response.statusCode == 200) {
       return response.data['session_token'];
+    } else if (response.statusCode == 400) {
+      return throw Exception('Bad Request');
+    } else if (response.statusCode == 401) {
+      return throw Exception('UNAUTHORIZED');
     } else {
       return throw Exception();
     }
@@ -37,8 +41,10 @@ class LogUserDatasourceImpl implements ILogUserDatasource {
 
     if (response.statusCode == 200) {
       return response.statusCode.toString();
+    } else if (response.statusCode == 400) {
+      return throw Exception('Bad Request');
     } else {
-      throw Exception();
+      return throw Exception();
     }
   }
 }

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:dio/native_imp.dart';
 import 'package:glpi_hoiol/app/modules/auth/domain/repositories/i_log_user_repository.dart';
 import 'package:glpi_hoiol/app/modules/auth/domain/types/params.dart';
