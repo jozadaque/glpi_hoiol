@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:glpi_hoiol/app/modules/auth/domain/types/params.dart';
 
-import 'package:glpi_hoiol/app/modules/auth/infra/datasources/i_log_user_datasource.dart';
+import 'package:glpi_hoiol/app/modules/auth/infra/datasources/i_login_datasource.dart';
 
-class LogUserDatasourceImpl implements ILogUserDatasource {
+class LoginDatasourceImpl implements ILoginDatasource {
   final Dio dio;
   final String url;
 
-  LogUserDatasourceImpl({
+  LoginDatasourceImpl({
     required this.dio,
     required this.url,
   });

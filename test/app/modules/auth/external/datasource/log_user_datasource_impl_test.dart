@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:glpi_hoiol/app/modules/auth/external/datasource/log_user_datasource_impl.dart';
+import 'package:glpi_hoiol/app/modules/auth/external/datasource/login_datasource_impl.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -8,7 +8,7 @@ import '../../../../share/mocks/mocks.dart';
 
 void main() {
   late Dio dio;
-  late LogUserDatasourceImpl datasource;
+  late LoginDatasourceImpl datasource;
   late MockParams params;
   late DioAdapter dioAdapter;
 
@@ -29,7 +29,7 @@ void main() {
           (request) => request.reply(200, {'session_token': 'anything'},
               delay: const Duration(seconds: 1)));
 
-      datasource = LogUserDatasourceImpl(dio: dio, url: 'path');
+      datasource = LoginDatasourceImpl(dio: dio, url: 'path');
 
       final session = await datasource.login(params);
 
@@ -42,7 +42,7 @@ void main() {
           (request) =>
               request.reply(200, {}, delay: const Duration(seconds: 1)));
 
-      datasource = LogUserDatasourceImpl(dio: dio, url: 'path');
+      datasource = LoginDatasourceImpl(dio: dio, url: 'path');
 
       final status = await datasource.logout('authToken');
 
@@ -62,7 +62,7 @@ void main() {
           (request) =>
               request.reply(400, null, delay: const Duration(seconds: 1)));
 
-      datasource = LogUserDatasourceImpl(dio: dio, url: 'path');
+      datasource = LoginDatasourceImpl(dio: dio, url: 'path');
 
       expect(() async => await datasource.login(params),
           throwsA(isA<Exception>()));
@@ -76,7 +76,7 @@ void main() {
 
       dioAdapter.onGet('path', (request) => request.reply(401, null));
 
-      datasource = LogUserDatasourceImpl(dio: dio, url: 'path');
+      datasource = LoginDatasourceImpl(dio: dio, url: 'path');
 
       expect(() => datasource.login(params), throwsA(isA<Exception>()));
     });
@@ -86,7 +86,7 @@ void main() {
         () async {
       dioAdapter.onGet('path', (request) => request.reply(400, null));
 
-      datasource = LogUserDatasourceImpl(dio: dio, url: 'path');
+      datasource = LoginDatasourceImpl(dio: dio, url: 'path');
 
       expect(() => datasource.logout('authToken'), throwsA(isA<Exception>()));
     });

@@ -1,19 +1,20 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:glpi_hoiol/app/modules/auth/domain/usecases/log_user_usecase.dart';
-import 'package:glpi_hoiol/app/modules/auth/exceptions/log_user_exception.dart';
+import 'package:glpi_hoiol/app/modules/auth/domain/usecases/login_usecase.dart';
+
+import 'package:glpi_hoiol/app/modules/auth/exceptions/login_exception.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../../share/mocks/mocks.dart';
 
 void main() {
-  late ILogUserUsecase usecase;
+  late ILoginUsecase usecase;
   late MockILogUserRepository repository;
   late MockParams params;
 
   setUp(() {
     repository = MockILogUserRepository();
-    usecase = LogUserUsecaseImpl(repository);
+    usecase = LoginUsecaseImpl(repository);
     params = MockParams();
   });
 

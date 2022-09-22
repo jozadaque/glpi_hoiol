@@ -1,17 +1,17 @@
 import 'package:dartz/dartz.dart';
-import 'package:glpi_hoiol/app/modules/auth/domain/repositories/i_log_user_repository.dart';
-import 'package:glpi_hoiol/app/modules/auth/exceptions/log_user_exception.dart';
+import 'package:glpi_hoiol/app/modules/auth/domain/repositories/i_login_repository.dart';
+import 'package:glpi_hoiol/app/modules/auth/exceptions/login_exception.dart';
 import '../types/params.dart';
 
-abstract class ILogUserUsecase {
+abstract class ILoginUsecase {
   Future<Either<Exception, String>> login(Params params);
   Future<Either<Exception, String>> logout(String authToken);
 }
 
-class LogUserUsecaseImpl extends ILogUserUsecase {
-  final IlogUserRepository repository;
+class LoginUsecaseImpl extends ILoginUsecase {
+  final IloginRepository repository;
 
-  LogUserUsecaseImpl(this.repository);
+  LoginUsecaseImpl(this.repository);
 
   @override
   Future<Either<Exception, String>> login(Params params) async {

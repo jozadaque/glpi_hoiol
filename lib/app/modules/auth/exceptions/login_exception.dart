@@ -1,26 +1,26 @@
-abstract class LogUserException implements Exception {
+abstract class ILoginException implements Exception {
   final String message;
   final StackTrace? stackTrace;
 
-  LogUserException({
+  ILoginException({
     required this.message,
     this.stackTrace,
   });
 }
 
-class LoginException extends LogUserException {
+class LoginException extends ILoginException {
   LoginException(
       {String message = 'Erro no campo Login', StackTrace? stackTrace})
       : super(message: message, stackTrace: stackTrace);
 }
 
-class PasswordException extends LogUserException {
+class PasswordException extends ILoginException {
   PasswordException(
       {String message = 'Erro no campo Senha', StackTrace? stackTrace})
       : super(message: message, stackTrace: stackTrace);
 }
 
-class TokenException extends LogUserException {
+class TokenException extends ILoginException {
   TokenException({String message = 'Token invalido', StackTrace? stackTrace})
       : super(message: message, stackTrace: stackTrace);
 }

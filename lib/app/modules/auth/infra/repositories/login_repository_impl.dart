@@ -1,13 +1,13 @@
 import 'package:glpi_hoiol/app/modules/auth/domain/types/params.dart';
 import 'package:dartz/dartz.dart';
 
-import '../../domain/repositories/i_log_user_repository.dart';
-import '../datasources/i_log_user_datasource.dart';
+import '../../domain/repositories/i_login_repository.dart';
+import '../datasources/i_login_datasource.dart';
 
-class LogUserRepositoryImpl implements IlogUserRepository {
-  final ILogUserDatasource datasource;
+class LoginRepositoryImpl implements IloginRepository {
+  final ILoginDatasource datasource;
 
-  LogUserRepositoryImpl(this.datasource);
+  LoginRepositoryImpl(this.datasource);
 
   @override
   Future<Either<Exception, String>> login(Params params) async {

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:glpi_hoiol/app/modules/auth/infra/repositories/log_user_repository_impl.dart';
+import 'package:glpi_hoiol/app/modules/auth/infra/repositories/login_repository_impl.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../../share/mocks/mocks.dart';
@@ -7,12 +7,12 @@ import '../../../../share/mocks/mocks.dart';
 void main() {
   late MockParams params;
   late MockLogUserDatasource datasource;
-  late LogUserRepositoryImpl repository;
+  late LoginRepositoryImpl repository;
 
   setUp(() {
     params = MockParams();
     datasource = MockLogUserDatasource();
-    repository = LogUserRepositoryImpl(datasource);
+    repository = LoginRepositoryImpl(datasource);
   });
 
   group('Success LogUserRepositoryImpl:', () {
