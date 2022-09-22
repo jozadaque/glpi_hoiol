@@ -9,11 +9,11 @@ import '../../../../share/mocks/mocks.dart';
 
 void main() {
   late ILoginUsecase usecase;
-  late MockILogUserRepository repository;
+  late MockILoginRepository repository;
   late MockParams params;
 
   setUp(() {
-    repository = MockILogUserRepository();
+    repository = MockILoginRepository();
     usecase = LoginUsecaseImpl(repository);
     params = MockParams();
   });

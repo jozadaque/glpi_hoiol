@@ -6,12 +6,12 @@ import '../../../../share/mocks/mocks.dart';
 
 void main() {
   late MockParams params;
-  late MockLogUserDatasource datasource;
+  late MockLoginDatasource datasource;
   late LoginRepositoryImpl repository;
 
   setUp(() {
     params = MockParams();
-    datasource = MockLogUserDatasource();
+    datasource = MockLoginDatasource();
     repository = LoginRepositoryImpl(datasource);
   });
 
