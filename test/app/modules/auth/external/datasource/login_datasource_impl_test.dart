@@ -64,8 +64,7 @@ void main() {
 
       datasource = LoginDatasourceImpl(dio: dio, url: 'path');
 
-      expect(() async => await datasource.login(params),
-          throwsA(isA<Exception>()));
+      expect(datasource.login(params), throwsA(isA<Exception>()));
     });
 
     test(
@@ -74,21 +73,54 @@ void main() {
       when(() => params.user).thenReturn('user');
       when(() => params.password).thenReturn('passs');
 
-      dioAdapter.onGet('path', (request) => request.reply(401, null));
+      dioAdapter.onGet(
+          'path',
+          (request) => request.reply(401, {'session_token': 'anything'},
+              delay: const Duration(seconds: 1)));
 
       datasource = LoginDatasourceImpl(dio: dio, url: 'path');
 
-      expect(() => datasource.login(params), throwsA(isA<Exception>()));
+      expect(datasource.login(params), throwsA(isA<Exception>()));
     });
 
     test(
         'should throw an exception to logout method when the status code is 400',
         () async {
-      dioAdapter.onGet('path', (request) => request.reply(400, null));
+      dioAdapter.onGet(
+          'path',
+          (request) =>
+              request.reply(400, {}, delay: const Duration(seconds: 1)));
 
       datasource = LoginDatasourceImpl(dio: dio, url: 'path');
 
-      expect(() => datasource.logout('authToken'), throwsA(isA<Exception>()));
+      expect(datasource.logout('anything'), throwsA(isA<Exception>()));
+    });
+
+    test('should throw an exception to login method when response is null',
+        () async {
+      when(() => params.user).thenReturn('user');
+      when(() => params.password).thenReturn('passs');
+
+      dioAdapter.onGet(
+          'path',
+          (request) =>
+              request.reply(0, null, delay: const Duration(seconds: 1)));
+
+      datasource = LoginDatasourceImpl(dio: dio, url: 'path');
+
+      expect(datasource.login(params), throwsA(isA<Exception>()));
+    });
+
+    test('should throw an exception to logout method when response is null',
+        () async {
+      dioAdapter.onGet(
+          'path',
+          (request) =>
+              request.reply(0, null, delay: const Duration(seconds: 1)));
+
+      datasource = LoginDatasourceImpl(dio: dio, url: 'path');
+
+      expect(datasource.logout('anything'), throwsA(isA<Exception>()));
     });
   });
 }
