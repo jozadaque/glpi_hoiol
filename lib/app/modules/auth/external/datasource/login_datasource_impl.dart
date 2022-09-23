@@ -18,16 +18,19 @@ class LoginDatasourceImpl implements ILoginDatasource {
     String basicauth =
         base64Encode(utf8.encode('${params.user}:${params.password}'));
 
-    final response = await dio.get(url,
-        options: Options(headers: {'Authorization': 'Basic $basicauth'}));
+    try {
+      final response = await dio.get(url,
+          options: Options(headers: {'Authorization': 'Basic $basicauth'}));
 
-    if (response.statusCode == 200) {
       return response.data['session_token'];
-    } else if (response.statusCode == 400) {
-      return throw Exception('Bad Request');
-    } else if (response.statusCode == 401) {
-      return throw Exception('UNAUTHORIZED');
-    } else {
+    } on DioError catch (e) {
+      if (e.response != null) {
+        if (e.response!.statusCode == 400) {
+          return throw Exception('Bad Request');
+        } else if (e.response!.statusCode == 401) {
+          return throw Exception('UNAUTHORIZED');
+        }
+      }
       return throw Exception();
     }
   }
@@ -36,14 +39,17 @@ class LoginDatasourceImpl implements ILoginDatasource {
   Future<String> logout(
     String authToken,
   ) async {
-    final response = await dio.get(url,
-        options: Options(headers: {'Session-Token': authToken}));
+    try {
+      final response = await dio.get(url,
+          options: Options(headers: {'Session-Token': authToken}));
 
-    if (response.statusCode == 200) {
       return response.statusCode.toString();
-    } else if (response.statusCode == 400) {
-      return throw Exception('Bad Request');
-    } else {
+    } on DioError catch (e) {
+      if (e.response != null) {
+        if (e.response!.statusCode == 400) {
+          return throw Exception('Bad Request');
+        }
+      }
       return throw Exception();
     }
   }
