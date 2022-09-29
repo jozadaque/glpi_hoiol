@@ -4,7 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:glpi_hoiol/app/modules/auth/domain/usecases/login_usecase.dart';
 import 'package:glpi_hoiol/app/modules/auth/exceptions/login_exception.dart';
 
-import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/login_bloc/login_state.dart';
 import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/logout_bloc/logout_bloc.dart';
 import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/logout_bloc/logout_event.dart';
 import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/logout_bloc/logout_state.dart';
