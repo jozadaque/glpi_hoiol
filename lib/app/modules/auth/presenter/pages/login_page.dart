@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/login_bloc/login_bloc.dart';
 
+import 'widgets/button_widget.dart';
+import 'widgets/textfield_widget.dart';
 import 'widgets/waves/wave_widget.dart';
 
 class LoginPage extends StatefulWidget {
-  final String title;
-  const LoginPage({super.key, required this.title});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late LoginBloc bloc;
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -50,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: const [
                     TextFieldWidget(labelText: 'Usuário'),
                     SizedBox(height: 10),
-                    TextFieldWidget(labelText: 'Senha'),
+                    TextFieldWidget(labelText: 'Senha', obscuredText: true),
                     SizedBox(height: 10),
                     ButtonWidget(label: 'Logar'),
                   ],
@@ -59,57 +74,6 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class ButtonWidget extends StatelessWidget {
-  final String label;
-
-  const ButtonWidget({super.key, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: SizedBox(
-        width: double.infinity,
-        child: ElevatedButton(
-          style: const ButtonStyle(),
-          onPressed: () {},
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            child: Text(label),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class TextFieldWidget extends StatelessWidget {
-  final String labelText;
-
-  const TextFieldWidget({
-    super.key,
-    required this.labelText,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        labelText: labelText,
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(
-              color: Color.fromARGB(251, 7, 22, 235),
-            )),
       ),
     );
   }
