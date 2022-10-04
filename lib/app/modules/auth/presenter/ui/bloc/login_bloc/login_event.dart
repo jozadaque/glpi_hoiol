@@ -7,3 +7,11 @@ class LoginEvent implements AccessEvent {
 
   LoginEvent(this.params);
 }
+
+class ReturnInitialPage implements AccessEvent {}
+
+class LogoutEvent implements AccessEvent {
+  final String token;
+
+  LogoutEvent(this.token);
+}

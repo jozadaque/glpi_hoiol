@@ -1,14 +1,14 @@
 import 'package:glpi_hoiol/app/modules/auth/exceptions/login_exception.dart';
 
-abstract class LogoutState {}
+abstract class AccessEvent {}
 
-class InitialLogoutState implements LogoutState {}
+class InitialLogoutState implements AccessEvent {}
 
-class LoadingLogoutState implements LogoutState {}
+class LoadingLogoutState implements AccessEvent {}
 
-class SuccessLogoutState implements LogoutState {}
+class SuccessLogoutState implements AccessEvent {}
 
-class ExceptionLogoutState implements LogoutState {
+class ExceptionLogoutState implements AccessEvent {
   final ILoginException exception;
 
   ExceptionLogoutState(this.exception);

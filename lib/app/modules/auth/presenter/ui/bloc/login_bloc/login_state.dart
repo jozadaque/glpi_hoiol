@@ -6,7 +6,17 @@ class InitialLoginState implements LoginState {}
 
 class LoadingLoginState implements LoginState {}
 
-class SuccessLoginState implements LoginState {}
+class SuccessLoginState implements LoginState {
+  final String token;
+
+  SuccessLoginState(this.token);
+}
+
+class SuccessLogoutState implements LoginState {
+  final String token;
+
+  SuccessLogoutState(this.token);
+}
 
 class ExceptionLoginState implements LoginState {
   final ILoginException exception;

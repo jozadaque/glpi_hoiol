@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 class ButtonWidget extends StatelessWidget {
   final String label;
+  final Function()? onPressed;
 
-  const ButtonWidget({super.key, required this.label});
+  const ButtonWidget({
+    super.key,
+    required this.label,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +18,7 @@ class ButtonWidget extends StatelessWidget {
         width: double.infinity,
         child: ElevatedButton(
           style: const ButtonStyle(),
-          onPressed: () {},
+          onPressed: onPressed,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 15),
             child: Text(label),

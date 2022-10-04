@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:glpi_hoiol/app/modules/auth/external/datasource/login_datasource_impl.dart';
+import 'package:glpi_hoiol/app/core/constants/app_constants.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -25,11 +26,11 @@ void main() {
       when(() => params.password).thenReturn('passs');
 
       dioAdapter.onGet(
-          'path',
+          appUrl,
           (request) => request.reply(200, {'session_token': 'anything'},
               delay: const Duration(seconds: 1)));
 
-      datasource = LoginDatasourceImpl(dio: dio, url: 'path');
+      datasource = LoginDatasourceImpl(dio);
 
       final session = await datasource.login(params);
 
@@ -38,11 +39,11 @@ void main() {
 
     test('Should return  status 200 when logout method is called', () async {
       dioAdapter.onGet(
-          'path',
+          appUrl,
           (request) =>
               request.reply(200, {}, delay: const Duration(seconds: 1)));
 
-      datasource = LoginDatasourceImpl(dio: dio, url: 'path');
+      datasource = LoginDatasourceImpl(dio);
 
       final status = await datasource.logout('authToken');
 
@@ -62,7 +63,7 @@ void main() {
           (request) =>
               request.reply(400, null, delay: const Duration(seconds: 1)));
 
-      datasource = LoginDatasourceImpl(dio: dio, url: 'path');
+      datasource = LoginDatasourceImpl(dio);
 
       expect(datasource.login(params), throwsA(isA<Exception>()));
     });
@@ -78,7 +79,7 @@ void main() {
           (request) => request.reply(401, {'session_token': 'anything'},
               delay: const Duration(seconds: 1)));
 
-      datasource = LoginDatasourceImpl(dio: dio, url: 'path');
+      datasource = LoginDatasourceImpl(dio);
 
       expect(datasource.login(params), throwsA(isA<Exception>()));
     });
@@ -91,7 +92,7 @@ void main() {
           (request) =>
               request.reply(400, {}, delay: const Duration(seconds: 1)));
 
-      datasource = LoginDatasourceImpl(dio: dio, url: 'path');
+      datasource = LoginDatasourceImpl(dio);
 
       expect(datasource.logout('anything'), throwsA(isA<Exception>()));
     });
@@ -106,7 +107,7 @@ void main() {
           (request) =>
               request.reply(0, null, delay: const Duration(seconds: 1)));
 
-      datasource = LoginDatasourceImpl(dio: dio, url: 'path');
+      datasource = LoginDatasourceImpl(dio);
 
       expect(datasource.login(params), throwsA(isA<Exception>()));
     });
@@ -118,7 +119,7 @@ void main() {
           (request) =>
               request.reply(0, null, delay: const Duration(seconds: 1)));
 
-      datasource = LoginDatasourceImpl(dio: dio, url: 'path');
+      datasource = LoginDatasourceImpl(dio);
 
       expect(datasource.logout('anything'), throwsA(isA<Exception>()));
     });
