@@ -4,49 +4,49 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:glpi_hoiol/app/modules/auth/domain/usecases/login_usecase.dart';
 import 'package:glpi_hoiol/app/modules/auth/exceptions/login_exception.dart';
 import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/auth_state.dart';
-import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/login_bloc/login_bloc.dart';
-import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/login_bloc/login_event.dart';
-import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/login_bloc/login_state.dart';
+import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/logout_bloc/logout_bloc.dart';
+import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/logout_bloc/logout_event.dart';
+import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/logout_bloc/logout_state.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../../../../share/mocks/mocks.dart';
 
 void main() {
-  late ILoginUsecase login;
+  late ILoginUsecase logout;
   late MockParams params;
 
   setUp(() {
     params = MockParams();
-    login = MockLoginUsecase();
+    logout = MockLoginUsecase();
   });
 
   group('Sucess LoginBloc', () {
-    blocTest<LoginBloc, AuthState>(
+    blocTest<LogoutBloc, AuthState>(
         'should return a state of loading and Success',
         build: () {
-          when(() => login.login(params))
+          when(() => logout.logout('anything'))
               .thenAnswer((_) async => right('anything'));
-          return LoginBloc(login);
+          return LogoutBloc(logout);
         },
-        act: (bloc) => bloc.add(LoginEvent(params)),
+        act: (bloc) => bloc.add(LogoutEvent('anything')),
         expect: () => [
-              isA<LoadingLoginState>(),
-              isA<SuccessLoginState>(),
+              isA<LoadingLogoutState>(),
+              isA<SuccessLogoutState>(),
             ]);
   });
 
   group('Fail LoginBloc', () {
-    blocTest<LoginBloc, AuthState>(
+    blocTest<LogoutBloc, AuthState>(
         'should return a state of loading and Exception',
         build: () {
-          when(() => login.login(params))
-              .thenAnswer((_) async => left(LoginException()));
-          return LoginBloc(login);
+          when(() => logout.logout('anything'))
+              .thenAnswer((_) async => left(LogoutException()));
+          return LogoutBloc(logout);
         },
-        act: (bloc) => bloc.add(LoginEvent(params)),
+        act: (bloc) => bloc.add(LogoutEvent('anything')),
         expect: () => [
-              isA<LoadingLoginState>(),
-              isA<ExceptionLoginState>(),
+              isA<LoadingLogoutState>(),
+              isA<ExceptionLogoutState>(),
             ]);
   });
 }

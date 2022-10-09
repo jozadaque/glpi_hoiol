@@ -1,25 +1,25 @@
 import 'package:glpi_hoiol/app/modules/auth/exceptions/login_exception.dart';
 
-abstract class LoginState {}
+import '../auth_state.dart';
 
-class InitialLoginState implements LoginState {}
+class InitialLoginState implements AuthState {}
 
-class LoadingLoginState implements LoginState {}
+class LoadingLoginState implements AuthState {}
 
-class SuccessLoginState implements LoginState {
+class SuccessLoginState implements AuthState {
   final String token;
 
   SuccessLoginState(this.token);
 }
 
-class SuccessLogoutState implements LoginState {
+class SuccessLogoutState implements AuthState {
   final String token;
 
   SuccessLogoutState(this.token);
 }
 
-class ExceptionLoginState implements LoginState {
-  final ILoginException exception;
+class ExceptionLoginState implements AuthState {
+  final IAuthException exception;
 
   ExceptionLoginState(this.exception);
 }

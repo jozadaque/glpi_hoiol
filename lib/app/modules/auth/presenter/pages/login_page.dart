@@ -6,6 +6,7 @@ import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/login_bloc/login_b
 import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/login_bloc/login_state.dart';
 
 import '../../domain/types/params.dart';
+import '../ui/bloc/auth_state.dart';
 import '../ui/bloc/login_bloc/login_event.dart';
 import 'widgets/button_widget.dart';
 import 'widgets/textfield_widget.dart';
@@ -108,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ],
           ),
-          BlocBuilder<LoginBloc, LoginState>(
+          BlocBuilder<LoginBloc, AuthState>(
               bloc: bloc,
               builder: (context, state) {
                 if (state is InitialLoginState) {

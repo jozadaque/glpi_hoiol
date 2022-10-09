@@ -1,17 +1,11 @@
 import 'package:glpi_hoiol/app/modules/auth/domain/types/params.dart';
 
-abstract class AccessEvent {}
+import '../auth_event.dart';
 
-class LoginEvent implements AccessEvent {
+class LoginEvent implements AuthEvent {
   final Params params;
 
   LoginEvent(this.params);
 }
 
-class ReturnInitialPage implements AccessEvent {}
-
-class LogoutEvent implements AccessEvent {
-  final String token;
-
-  LogoutEvent(this.token);
-}
+class ReturnInitialPage implements AuthEvent {}
