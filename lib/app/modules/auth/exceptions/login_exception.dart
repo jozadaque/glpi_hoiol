@@ -10,13 +10,7 @@ abstract class IAuthException implements Exception {
 
 class LoginException extends IAuthException {
   LoginException(
-      {String message = 'Erro no campo Login', StackTrace? stackTrace})
-      : super(message: message, stackTrace: stackTrace);
-}
-
-class PasswordException extends IAuthException {
-  PasswordException(
-      {String message = 'Erro no campo Senha', StackTrace? stackTrace})
+      {String message = 'Usuário ou Senha Inválida', StackTrace? stackTrace})
       : super(message: message, stackTrace: stackTrace);
 }
 

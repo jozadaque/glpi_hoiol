@@ -22,11 +22,7 @@ class LoginUsecaseImpl extends ILoginUsecase {
     }
 
     if (params.password.isEmpty) {
-      return left(PasswordException());
-    }
-
-    if (params.password.length < 4) {
-      return left(PasswordException());
+      return left(LoginException());
     }
 
     final result = await repository.login(params);

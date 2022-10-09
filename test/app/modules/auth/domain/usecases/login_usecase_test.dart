@@ -59,18 +59,7 @@ void main() {
 
       final result = await usecase.login(params);
 
-      expect(result.fold((l) => l, (r) => r), isA<PasswordException>());
-    });
-
-    test('should return an error when the password is less than 4.', () async {
-      when(() => params.user).thenReturn('usuario');
-      when(() => params.password).thenReturn('123');
-      when(() => repository.login(params))
-          .thenAnswer((_) async => right('aynthing'));
-
-      final result = await usecase.login(params);
-
-      expect(result.fold((l) => l, (r) => r), isA<PasswordException>());
+      expect(result.fold((l) => l, (r) => r), isA<LoginException>());
     });
 
     test('Should return an error when auth_token is empty.', () async {
