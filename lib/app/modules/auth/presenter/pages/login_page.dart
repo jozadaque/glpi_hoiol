@@ -40,6 +40,16 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
+  showSnackBar(String message) {
+    Future.delayed(
+      const Duration(milliseconds: 300),
+      () {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(message)));
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -47,104 +57,81 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 11, 11, 235),
-      body: BlocBuilder<LoginBloc, LoginState>(
-          bloc: bloc,
-          builder: (context, state) {
-            if (state is InitialLoginState) {
-              return Stack(
-                children: [
-                  AnimatedPositioned(
-                    duration: const Duration(milliseconds: 600),
-                    curve: Curves.easeOutQuad,
-                    top: keybordIsActive ? -size.height / 3.7 : 0.0,
-                    child: WaveWidget(
-                      size: size,
-                      yOffset: size.height / 3.0,
-                      color: const Color.fromARGB(255, 254, 255, 255),
-                    ),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Center(
-                        child: Text(
-                          'GLPI',
-                          style: TextStyle(
-                              fontSize: 80,
-                              fontWeight: FontWeight.w900,
-                              color: Color.fromARGB(255, 11, 11, 235)),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 60, left: 20, right: 20, bottom: 60),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            TextFieldWidget(
-                                labelText: 'Usuário', controller: user),
-                            const SizedBox(height: 10),
-                            TextFieldWidget(
-                              labelText: 'Senha',
-                              obscuredText: true,
-                              controller: password,
-                            ),
-                            const SizedBox(height: 10),
-                            ButtonWidget(
-                                label: 'Logar',
-                                onPressed: () {
-                                  bloc.add(LoginEvent(Params(
-                                    password: password.text,
-                                    user: user.text,
-                                  )));
-                                }),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            }
-            if (state is LoadingLoginState) {
-              return Container(
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  child: const Center(child: CircularProgressIndicator()));
-            }
-            if (state is ExceptionLoginState) {
-              return Container(
-                color: const Color.fromARGB(255, 255, 255, 255),
+      body: Stack(
+        children: [
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 600),
+            curve: Curves.easeOutQuad,
+            top: keybordIsActive ? -size.height / 3.7 : 0.0,
+            child: WaveWidget(
+              size: size,
+              yOffset: size.height / 3.0,
+              color: const Color.fromARGB(255, 254, 255, 255),
+            ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const Center(
+                child: Text(
+                  'GLPI',
+                  style: TextStyle(
+                      fontSize: 80,
+                      fontWeight: FontWeight.w900,
+                      color: Color.fromARGB(255, 11, 11, 235)),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 60, left: 20, right: 20, bottom: 60),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(state.exception.message),
+                    TextFieldWidget(labelText: 'Usuário', controller: user),
+                    const SizedBox(height: 10),
+                    TextFieldWidget(
+                      labelText: 'Senha',
+                      obscuredText: true,
+                      controller: password,
+                    ),
+                    const SizedBox(height: 10),
                     ButtonWidget(
-                        label: 'Voltar',
+                        label: 'Logar',
                         onPressed: () {
-                          bloc.add(ReturnInitialPage());
-                        })
+                          bloc.add(LoginEvent(Params(
+                            password: password.text,
+                            user: user.text,
+                          )));
+                        }),
                   ],
                 ),
-              );
-            }
-            if (state is SuccessLoginState) {
-              return Container(
-                  color: const Color.fromARGB(255, 255, 255, 255),
-                  child: Center(
-                      child: Column(
-                    children: [
-                      const Text('Sucesso'),
-                      ButtonWidget(
-                          label: 'Sair',
-                          onPressed: () {
-                            bloc.add(LogoutEvent(state.token));
-                          })
-                    ],
-                  )));
-            } else {
-              return Container();
-            }
-          }),
+              ),
+            ],
+          ),
+          BlocBuilder<LoginBloc, LoginState>(
+              bloc: bloc,
+              builder: (context, state) {
+                if (state is InitialLoginState) {
+                  return Container();
+                }
+                if (state is LoadingLoginState) {
+                  return Container(
+                      color: const Color.fromARGB(255, 255, 255, 255),
+                      child: const Center(child: CircularProgressIndicator()));
+                }
+                if (state is ExceptionLoginState) {
+                  return Container(
+                    child: showSnackBar(state.exception.message),
+                  );
+                }
+                if (state is SuccessLoginState) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  Modular.to.pushReplacementNamed('/ticket/');
+                }
+                return Container();
+              }),
+        ],
+      ),
     );
   }
 }
