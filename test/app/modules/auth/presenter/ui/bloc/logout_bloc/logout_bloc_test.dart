@@ -13,10 +13,8 @@ import '../../../../../../share/mocks/mocks.dart';
 
 void main() {
   late ILoginUsecase logout;
-  late MockParams params;
 
   setUp(() {
-    params = MockParams();
     logout = MockLoginUsecase();
   });
 
