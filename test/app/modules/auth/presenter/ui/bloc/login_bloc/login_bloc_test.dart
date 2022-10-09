@@ -33,6 +33,18 @@ void main() {
               isA<LoadingLoginState>(),
               isA<SuccessLoginState>(),
             ]);
+
+    blocTest<LoginBloc, AuthState>(
+        'should return a state of loading and InitialLoginState',
+        build: () {
+          when(() {});
+          return LoginBloc(login);
+        },
+        act: (bloc) => bloc.add(ReturnInitialPage()),
+        expect: () => [
+              isA<LoadingLoginState>(),
+              isA<InitialLoginState>(),
+            ]);
   });
 
   group('Fail LoginBloc', () {

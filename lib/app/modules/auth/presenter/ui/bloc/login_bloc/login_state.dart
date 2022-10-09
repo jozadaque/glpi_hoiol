@@ -12,12 +12,6 @@ class SuccessLoginState implements AuthState {
   SuccessLoginState(this.token);
 }
 
-class SuccessLogoutState implements AuthState {
-  final String token;
-
-  SuccessLogoutState(this.token);
-}
-
 class ExceptionLoginState implements AuthState {
   final IAuthException exception;
 
