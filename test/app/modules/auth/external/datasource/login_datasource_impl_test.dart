@@ -26,7 +26,7 @@ void main() {
       when(() => params.password).thenReturn('passs');
 
       dioAdapter.onGet(
-          appUrl,
+          '$appUrl/initSession',
           (request) => request.reply(200, {'session_token': 'anything'},
               delay: const Duration(seconds: 1)));
 
@@ -39,7 +39,7 @@ void main() {
 
     test('Should return  status 200 when logout method is called', () async {
       dioAdapter.onGet(
-          appUrl,
+          '$appUrl/killSession',
           (request) =>
               request.reply(200, {}, delay: const Duration(seconds: 1)));
 
@@ -59,7 +59,7 @@ void main() {
       when(() => params.password).thenReturn('passs');
 
       dioAdapter.onGet(
-          'path',
+          '$appUrl/initSession',
           (request) =>
               request.reply(400, null, delay: const Duration(seconds: 1)));
 
@@ -75,7 +75,7 @@ void main() {
       when(() => params.password).thenReturn('passs');
 
       dioAdapter.onGet(
-          'path',
+          '$appUrl/initSession',
           (request) => request.reply(401, {'session_token': 'anything'},
               delay: const Duration(seconds: 1)));
 
@@ -88,7 +88,7 @@ void main() {
         'should throw an exception to logout method when the status code is 400',
         () async {
       dioAdapter.onGet(
-          'path',
+          '$appUrl/killSession',
           (request) =>
               request.reply(400, {}, delay: const Duration(seconds: 1)));
 
@@ -103,7 +103,7 @@ void main() {
       when(() => params.password).thenReturn('passs');
 
       dioAdapter.onGet(
-          'path',
+          '$appUrl/initSession',
           (request) =>
               request.reply(0, null, delay: const Duration(seconds: 1)));
 
@@ -115,7 +115,7 @@ void main() {
     test('should throw an exception to logout method when response is null',
         () async {
       dioAdapter.onGet(
-          'path',
+          '$appUrl/killSession',
           (request) =>
               request.reply(0, null, delay: const Duration(seconds: 1)));
 
