@@ -7,9 +7,7 @@ class InitialLoginState implements AuthState {}
 class LoadingLoginState implements AuthState {}
 
 class SuccessLoginState implements AuthState {
-  final String token;
-
-  SuccessLoginState(this.token);
+  SuccessLoginState();
 }
 
 class ExceptionLoginState implements AuthState {

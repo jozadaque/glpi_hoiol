@@ -1,2 +1,3 @@
-const String appUrl = 'http://191.7.192.130:11040/ti/apirest.php';
-const String authToken = '';
+const String appUrl =
+    'https://jozadaqueglpi.000webhostapp.com/glpi//apirest.php';
+String authToken = '';

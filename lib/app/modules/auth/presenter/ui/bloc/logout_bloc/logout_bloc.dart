@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:glpi_hoiol/app/core/constants/app_constants.dart';
 import 'package:glpi_hoiol/app/modules/auth/domain/usecases/login_usecase.dart';
 import 'package:glpi_hoiol/app/modules/auth/exceptions/login_exception.dart';
 
@@ -22,6 +23,7 @@ class LogoutBloc extends Bloc<AuthEvent, AuthState> {
     result.fold(
       (l) => emit(ExceptionLogoutState(l as IAuthException)),
       (r) {
+        authToken = '';
         return emit(SuccessLogoutState());
       },
     );

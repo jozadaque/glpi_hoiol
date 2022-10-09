@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:glpi_hoiol/app/modules/auth/domain/repositories/i_login_repository.dart';
 import 'package:glpi_hoiol/app/modules/auth/exceptions/login_exception.dart';
@@ -39,6 +41,7 @@ class LoginUsecaseImpl extends ILoginUsecase {
     }
 
     final result = await repository.logout(authToken);
+    log(result.toString());
     return result;
   }
 }
