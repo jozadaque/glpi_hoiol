@@ -9,13 +9,11 @@ abstract class ILogUserUsecase {
 class LogUserUsecase extends ILogUserUsecase {
   @override
   Future<Either<Exception, bool>> logout() {
-    // TODO: implement logout
     throw UnimplementedError();
   }
 
   @override
   Future<Either<Exception, String>> login(Params params) {
-    // TODO: implement login
     throw UnimplementedError();
   }
 }
