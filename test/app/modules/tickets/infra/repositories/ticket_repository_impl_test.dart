@@ -3,6 +3,8 @@ import 'package:glpi_hoiol/app/modules/tickets/domain/entity/itil_category_entit
 import 'package:glpi_hoiol/app/modules/tickets/domain/entity/ticket_entity.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/repositories/tickets_erros.dart';
 import 'package:glpi_hoiol/app/modules/tickets/infra/datasources/i_ticket_datasource.dart';
+import 'package:glpi_hoiol/app/modules/tickets/infra/entity/itil_categories.dart';
+import 'package:glpi_hoiol/app/modules/tickets/infra/entity/ticket_entity.dart';
 import 'package:glpi_hoiol/app/modules/tickets/infra/repositories/ticket_repository_impl.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -58,7 +60,7 @@ void main() {
     });
 
     test('Should return a ListTicketError to getCategories method', () async {
-      when(() => datasource.getCategories()).thenThrow(ListCategoryError());
+      when(() => repository.getCategories()).thenThrow(ListCategoryError());
 
       final response = await repository.getCategories();
 
@@ -66,7 +68,7 @@ void main() {
     });
 
     test('Should return a ListTicketError to getTicketsById method', () async {
-      when(() => datasource.getTicketById(0)).thenThrow(TicketError());
+      when(() => repository.getTicketById(0)).thenThrow(TicketError());
 
       final response = await repository.getTicketById(0);
 
@@ -75,7 +77,7 @@ void main() {
 
     test('Should return a ListTicketError to getCategoriesById method',
         () async {
-      when(() => datasource.getCategoriesById(0)).thenThrow(CategoryError());
+      when(() => repository.getCategoriesById(0)).thenThrow(CategoryError());
 
       final response = await repository.getCategoriesById(0);
 
@@ -86,8 +88,8 @@ void main() {
 
 class TicketDatasourceMock extends Mock implements ITicketDatasource {}
 
-List<TicketEntity> tickets = [
-  TicketEntity(
+List<Ticket> tickets = [
+  Ticket(
     id: 1,
     name: 'name',
     date: 'date',
@@ -96,7 +98,7 @@ List<TicketEntity> tickets = [
     priority: 2,
     itilCategory: ItilCategoryEntity(id: 0, name: ''),
   ),
-  TicketEntity(
+  Ticket(
     id: 2,
     name: 'name',
     date: 'date',
@@ -107,7 +109,7 @@ List<TicketEntity> tickets = [
   )
 ];
 
-List<ItilCategoryEntity> categories = [
-  ItilCategoryEntity(id: 1, name: 'name'),
-  ItilCategoryEntity(id: 2, name: 'name'),
+List<ItilCategories> categories = [
+  ItilCategories(id: 1, name: 'name'),
+  ItilCategories(id: 2, name: 'name'),
 ];
