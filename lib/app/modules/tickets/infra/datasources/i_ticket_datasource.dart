@@ -5,5 +5,5 @@ abstract class ITicketDatasource {
   Future<List<Ticket>> getTickets();
   Future<Ticket> getTicketById(int id);
   Future<List<ItilCategories>> getCategories();
-  Future<ItilCategories> getCategoriesById(int id);
+  Future<ItilCategories> getCategoryById(int id);
 }

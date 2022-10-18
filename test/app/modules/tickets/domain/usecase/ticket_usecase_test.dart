@@ -2,8 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/entity/itil_category_entity.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/entity/ticket_entity.dart';
+import 'package:glpi_hoiol/app/modules/tickets/domain/errors/tickets_erros.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/repositories/i_ticket_repository.dart';
-import 'package:glpi_hoiol/app/modules/tickets/domain/repositories/tickets_erros.dart';
+
 import 'package:glpi_hoiol/app/modules/tickets/domain/usecase/ticket_usecase.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -104,7 +105,7 @@ List<TicketEntity> tickets = [
     status: 1,
     content: 'content',
     priority: 2,
-    itilCategory: ItilCategoryEntity(id: 0, name: ''),
+    itilCategory: 1,
   ),
   TicketEntity(
     id: 2,
@@ -113,7 +114,7 @@ List<TicketEntity> tickets = [
     status: 1,
     content: 'content',
     priority: 2,
-    itilCategory: ItilCategoryEntity(id: 0, name: ''),
+    itilCategory: 1,
   )
 ];
 

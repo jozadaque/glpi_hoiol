@@ -1,4 +1,3 @@
-import '../../domain/entity/itil_category_entity.dart';
 import '../../domain/entity/ticket_entity.dart';
 
 class Ticket implements TicketEntity {
@@ -15,7 +14,7 @@ class Ticket implements TicketEntity {
   @override
   final int priority;
   @override
-  final ItilCategoryEntity itilCategory;
+  final dynamic itilCategory;
 
   Ticket({
     this.id,
@@ -26,14 +25,4 @@ class Ticket implements TicketEntity {
     required this.priority,
     required this.itilCategory,
   });
-
-  factory Ticket.fromJom(dynamic jsom) {
-    return Ticket(
-        name: jsom['name'],
-        date: jsom['date'],
-        status: jsom['status'],
-        content: jsom['content'],
-        priority: jsom['priority'],
-        itilCategory: jsom['itilCategory']);
-  }
 }

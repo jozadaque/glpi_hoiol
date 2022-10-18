@@ -3,7 +3,7 @@ import 'package:glpi_hoiol/app/modules/tickets/domain/entity/itil_category_entit
 import 'package:glpi_hoiol/app/core/errors/i_failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/repositories/i_ticket_repository.dart';
-import 'package:glpi_hoiol/app/modules/tickets/domain/repositories/tickets_erros.dart';
+import 'package:glpi_hoiol/app/modules/tickets/domain/errors/tickets_erros.dart';
 
 import '../datasources/i_ticket_datasource.dart';
 
@@ -25,7 +25,7 @@ class TicketRepositoryImpl extends ITicketRepository {
   @override
   Future<Either<IFailure, ItilCategoryEntity>> getCategoriesById(int id) async {
     try {
-      final response = await datasource.getCategoriesById(id);
+      final response = await datasource.getCategoryById(id);
       return right(response);
     } catch (e) {
       return left(CategoryError(message: e.toString()));

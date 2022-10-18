@@ -1,5 +1,3 @@
-import 'itil_category_entity.dart';
-
 class TicketEntity {
   final int? id;
   final String name;
@@ -7,7 +5,7 @@ class TicketEntity {
   final int status;
   final String content;
   final int priority;
-  final ItilCategoryEntity itilCategory;
+  final dynamic itilCategory;
 
   TicketEntity({
     this.id,

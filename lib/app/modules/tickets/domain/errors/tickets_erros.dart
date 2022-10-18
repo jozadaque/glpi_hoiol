@@ -39,3 +39,23 @@ class TicketError implements IFailure {
     this.stackTrace,
   });
 }
+
+class ErrorNotAuth implements IFailure {
+  String? message;
+  StackTrace? stackTrace;
+
+  ErrorNotAuth({
+    this.message = 'Acesso não autorizado',
+    this.stackTrace,
+  });
+}
+
+class NotFoundedError implements IFailure {
+  String? message;
+  StackTrace? stackTrace;
+
+  NotFoundedError({
+    this.message = 'Ocorreu um erro não esperado.',
+    this.stackTrace,
+  });
+}

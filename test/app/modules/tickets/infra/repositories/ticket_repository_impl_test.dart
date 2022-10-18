@@ -1,7 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/entity/itil_category_entity.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/entity/ticket_entity.dart';
-import 'package:glpi_hoiol/app/modules/tickets/domain/repositories/tickets_erros.dart';
+import 'package:glpi_hoiol/app/modules/tickets/domain/errors/tickets_erros.dart';
+
 import 'package:glpi_hoiol/app/modules/tickets/infra/datasources/i_ticket_datasource.dart';
 import 'package:glpi_hoiol/app/modules/tickets/infra/entity/itil_categories.dart';
 import 'package:glpi_hoiol/app/modules/tickets/infra/entity/ticket_entity.dart';
@@ -42,7 +43,7 @@ void main() {
     });
 
     test('Should return a ItilCategority object', () async {
-      when(() => datasource.getCategoriesById(0))
+      when(() => datasource.getCategoryById(0))
           .thenAnswer((_) async => categories[0]);
       final response = await repository.getCategoriesById(0);
 
@@ -96,7 +97,7 @@ List<Ticket> tickets = [
     status: 1,
     content: 'content',
     priority: 2,
-    itilCategory: ItilCategoryEntity(id: 0, name: ''),
+    itilCategory: 1,
   ),
   Ticket(
     id: 2,
@@ -105,7 +106,7 @@ List<Ticket> tickets = [
     status: 1,
     content: 'content',
     priority: 2,
-    itilCategory: ItilCategoryEntity(id: 0, name: ''),
+    itilCategory: 2,
   )
 ];
 

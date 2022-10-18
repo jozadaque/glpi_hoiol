@@ -11,6 +11,6 @@ class ItilCategories implements ItilCategoryEntity {
     required this.name,
   });
 
-  factory ItilCategories.fromJson(Map<String, dynamic> jsom) =>
+  factory ItilCategories.fromJson(dynamic jsom) =>
       ItilCategories(id: jsom['id'], name: jsom['name']);
 }

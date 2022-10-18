@@ -2,132 +2,193 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:glpi_hoiol/app/core/constants/constants.dart';
+import 'package:glpi_hoiol/app/modules/tickets/domain/errors/tickets_erros.dart';
 import 'package:glpi_hoiol/app/modules/tickets/external/datasources/ticket_datasource_impl.dart';
+import 'package:glpi_hoiol/app/modules/tickets/infra/entity/ticket_entity.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
+import 'categories_json.dart';
+import 'category_ticket_json.dart';
+import 'tickets_json.dart';
 
 void main() {
   late Dio dio;
   late DioAdapter dioAdapter;
   late TicketDatasourceImpl datasource;
 
-  setUp(() {
+  setUpAll(() {
     dio = Dio();
     dioAdapter = DioAdapter(dio: dio);
     dio.httpClientAdapter = dioAdapter;
     datasource = TicketDatasourceImpl(dio);
   });
 
-  test('Should return a lista of Categories', () async {
-    dioAdapter.onGet(
-      '$appUrl/ITILCategory',
-      (server) => server.reply(200, jsonDecode(categories),
-          delay: const Duration(seconds: 1)),
-    );
+  group('TicketDataSourceImpl - Success', () {
+    test('Should return a lista of Categories with  length == 21', () async {
+      dioAdapter.onGet(
+        '$appUrl/ITILCategory',
+        (server) => server.reply(200, jsonDecode(categories),
+            delay: const Duration(seconds: 1)),
+      );
 
-    final response = await datasource.getCategories();
+      final response = await datasource.getCategories();
 
-    expect(response.length, 3);
+      expect(response.length, 21);
+    });
+
+    test(
+        'Should return "NOBREAK - FALHA/DEFEITO" when id == 1 in categoryById method',
+        () async {
+      dioAdapter.onGet(
+        '$appUrl/ITILCategory/7',
+        (server) => server.reply(200, jsonDecode(category),
+            delay: const Duration(seconds: 1)),
+      );
+
+      final response = await datasource.getCategoryById(7);
+
+      expect(response.name, "NOBREAK - FALHA/DEFEITO");
+    });
+
+    test(
+        'Should return "Nobreak Não esta Funcionando" when id == 1 in ticketById method',
+        () async {
+      dioAdapter.onGet(
+        '$appUrl/Ticket/1',
+        (server) => server.reply(200, jsonDecode(ticket),
+            delay: const Duration(seconds: 1)),
+      );
+
+      for (var i = 0; i < 50; i++) {
+        dioAdapter.onGet(
+          '$appUrl/ITILCategory/$i',
+          (server) => server.reply(200, jsonDecode(category),
+              delay: const Duration(seconds: 1)),
+        );
+      }
+
+      final Ticket response = await datasource.getTicketById(1);
+
+      expect(response.name, 'Nobreak Não esta Funcionando');
+    });
+
+    test('Should return a lista of Tickts with  length == 21', () async {
+      dioAdapter.onGet(
+        '$appUrl/Ticket',
+        (server) => server.reply(200, jsonDecode(tickets),
+            delay: const Duration(seconds: 1)),
+      );
+
+      final response = await datasource.getTickets();
+
+      expect(response.length, 30);
+    });
+  });
+
+  group('TicketDataSourceImpl - Fail', () {
+    test('Should return a NotFoundedError to getTickets method', () async {
+      dioAdapter.onGet(
+        '$appUrl/Ticket',
+        (server) => server.reply(0, null, delay: const Duration(seconds: 1)),
+      );
+
+      expect(datasource.getTickets(), throwsA(isA<NotFoundedError>()));
+    });
+
+    test('Should return a ErrorNotAuth to getTickets method when status == 401',
+        () async {
+      dioAdapter.onGet(
+        '$appUrl/Ticket',
+        (server) => server.reply(401, null, delay: const Duration(seconds: 1)),
+      );
+
+      expect(datasource.getTickets(), throwsA(isA<ErrorNotAuth>()));
+    });
+
+//*
+    test('Should return a NotFoundedError to getCategories method', () async {
+      dioAdapter.onGet(
+        '$appUrl/ITILCategory',
+        (server) => server.reply(0, null, delay: const Duration(seconds: 1)),
+      );
+
+      expect(datasource.getCategories(), throwsA(isA<NotFoundedError>()));
+    });
+
+    test(
+        'Should return a ErrorNotAuth to getCategories method when status == 401',
+        () async {
+      dioAdapter.onGet(
+        '$appUrl/ITILCategory',
+        (server) => server.reply(401, null, delay: const Duration(seconds: 1)),
+      );
+
+      expect(datasource.getCategories(), throwsA(isA<ErrorNotAuth>()));
+    });
+
+//*
+
+    test('Should return a NotFoundedError to getTicketById method', () async {
+      dioAdapter.onGet(
+        '$appUrl/Ticket/0)',
+        (server) => server.reply(0, null, delay: const Duration(seconds: 1)),
+      );
+
+      expect(datasource.getTicketById(0), throwsA(isA<NotFoundedError>()));
+    });
+
+    test(
+        'Should return a ErrorNotAuth to getTicketById method when status == 401',
+        () async {
+      dioAdapter.onGet(
+        '$appUrl/Ticket/1',
+        (server) => server.reply(401, null, delay: const Duration(seconds: 1)),
+      );
+
+      expect(datasource.getTicketById(1), throwsA(isA<ErrorNotAuth>()));
+    });
+
+    test(
+        'Should return a TicketError to getTicketById method when status == 404',
+        () async {
+      dioAdapter.onGet(
+        '$appUrl/Ticket/1',
+        (server) => server.reply(404, null, delay: const Duration(seconds: 1)),
+      );
+
+      expect(datasource.getTicketById(1), throwsA(isA<TicketError>()));
+    });
+
+    //*
+
+    test('Should return a NotFoundedError to getCategoryById method', () async {
+      dioAdapter.onGet(
+        '$appUrl/ITILCategory/1',
+        (server) => server.reply(0, null, delay: const Duration(seconds: 1)),
+      );
+
+      expect(datasource.getCategoryById(1), throwsA(isA<NotFoundedError>()));
+    });
+
+    test(
+        'Should return a CategoryError to getCategoryById method when status == 401',
+        () async {
+      dioAdapter.onGet(
+        '$appUrl/ITILCategory/0',
+        (server) => server.reply(401, null, delay: const Duration(seconds: 1)),
+      );
+
+      expect(datasource.getCategoryById(0), throwsA(isA<ErrorNotAuth>()));
+    });
+
+    test(
+        'Should return a CategoryError to getCategoryById method when status == 404',
+        () async {
+      dioAdapter.onGet(
+        '$appUrl/ITILCategory/0',
+        (server) => server.reply(404, null, delay: const Duration(seconds: 1)),
+      );
+
+      expect(datasource.getCategoryById(0), throwsA(isA<CategoryError>()));
+    });
   });
 }
-
-String categories = r'''[
-  {
-    "id": 1,
-    "entities_id": 0,
-    "is_recursive": 0,
-    "itilcategories_id": 0,
-    "name": "Computador - Falha",
-    "completename": "Computador - Falha",
-    "comment": "",
-    "level": 1,
-    "knowbaseitemcategories_id": 0,
-    "users_id": 0,
-    "groups_id": 0,
-    "code": "",
-    "ancestors_cache": "[]",
-    "sons_cache": null,
-    "is_helpdeskvisible": 1,
-    "tickettemplates_id_incident": 0,
-    "tickettemplates_id_demand": 0,
-    "changetemplates_id": 0,
-    "problemtemplates_id": 0,
-    "is_incident": 1,
-    "is_request": 1,
-    "is_problem": 1,
-    "is_change": 1,
-    "date_mod": "2022-10-09 15:30:16",
-    "date_creation": "2022-10-09 15:30:16",
-    "links": [
-      {
-        "rel": "Entity",
-        "href": "https://jozadaqueglpi.000webhostapp.com/glpi/apirest.php/Entity/0"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "entities_id": 0,
-    "is_recursive": 0,
-    "itilcategories_id": 0,
-    "name": "Nobreak - falha",
-    "completename": "Nobreak - falha",
-    "comment": "",
-    "level": 1,
-    "knowbaseitemcategories_id": 0,
-    "users_id": 0,
-    "groups_id": 0,
-    "code": "",
-    "ancestors_cache": "[]",
-    "sons_cache": null,
-    "is_helpdeskvisible": 1,
-    "tickettemplates_id_incident": 0,
-    "tickettemplates_id_demand": 0,
-    "changetemplates_id": 0,
-    "problemtemplates_id": 0,
-    "is_incident": 1,
-    "is_request": 1,
-    "is_problem": 1,
-    "is_change": 1,
-    "date_mod": "2022-10-09 15:33:27",
-    "date_creation": "2022-10-09 15:33:27",
-    "links": [
-      {
-        "rel": "Entity",
-        "href": "https://jozadaqueglpi.000webhostapp.com/glpi/apirest.php/Entity/0"
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "entities_id": 0,
-    "is_recursive": 0,
-    "itilcategories_id": 0,
-    "name": "Criação de Usuario",
-    "completename": "Criação de Usuario",
-    "comment": "",
-    "level": 1,
-    "knowbaseitemcategories_id": 0,
-    "users_id": 0,
-    "groups_id": 0,
-    "code": "",
-    "ancestors_cache": "[]",
-    "sons_cache": null,
-    "is_helpdeskvisible": 1,
-    "tickettemplates_id_incident": 0,
-    "tickettemplates_id_demand": 0,
-    "changetemplates_id": 0,
-    "problemtemplates_id": 0,
-    "is_incident": 1,
-    "is_request": 1,
-    "is_problem": 1,
-    "is_change": 1,
-    "date_mod": "2022-10-09 15:34:35",
-    "date_creation": "2022-10-09 15:34:35",
-    "links": [
-      {
-        "rel": "Entity",
-        "href": "https://jozadaqueglpi.000webhostapp.com/glpi/apirest.php/Entity/0"
-      }
-    ]
-  }
-]''';
