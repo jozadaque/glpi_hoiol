@@ -33,8 +33,11 @@ class TicketDatasourceImpl implements ITicketDatasource {
         if (e.response!.statusCode == 401) {
           throw ErrorNotAuth(stackTrace: s);
         }
+        throw PageNotFoundError(message: e.message.toString());
       }
-      throw NotFoundedError(stackTrace: s);
+      throw Exception();
+    } catch (e) {
+      throw NotFoundedError(message: e.toString());
     }
   }
 
@@ -75,7 +78,6 @@ class TicketDatasourceImpl implements ITicketDatasource {
 
       return ticket;
     } on DioError catch (e, s) {
-      //print(e.response);
       if (e.response != null) {
         if (e.response!.statusCode == 401) {
           throw ErrorNotAuth(stackTrace: s);

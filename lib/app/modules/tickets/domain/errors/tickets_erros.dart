@@ -1,7 +1,9 @@
 import 'package:glpi_hoiol/app/core/errors/i_failure.dart';
 
 class ListTicketError implements IFailure {
+  @override
   String? message;
+  @override
   StackTrace? stackTrace;
 
   ListTicketError({
@@ -11,7 +13,9 @@ class ListTicketError implements IFailure {
 }
 
 class ListCategoryError implements IFailure {
+  @override
   String? message;
+  @override
   StackTrace? stackTrace;
 
   ListCategoryError({
@@ -21,7 +25,9 @@ class ListCategoryError implements IFailure {
 }
 
 class CategoryError implements IFailure {
+  @override
   String? message;
+  @override
   StackTrace? stackTrace;
 
   CategoryError({
@@ -31,7 +37,9 @@ class CategoryError implements IFailure {
 }
 
 class TicketError implements IFailure {
+  @override
   String? message;
+  @override
   StackTrace? stackTrace;
 
   TicketError({
@@ -41,7 +49,9 @@ class TicketError implements IFailure {
 }
 
 class ErrorNotAuth implements IFailure {
+  @override
   String? message;
+  @override
   StackTrace? stackTrace;
 
   ErrorNotAuth({
@@ -50,8 +60,22 @@ class ErrorNotAuth implements IFailure {
   });
 }
 
-class NotFoundedError implements IFailure {
+class PageNotFoundError implements IFailure {
+  @override
   String? message;
+  @override
+  StackTrace? stackTrace;
+
+  PageNotFoundError({
+    this.message = 'Erro de Conexão com servidor - 404',
+    this.stackTrace,
+  });
+}
+
+class NotFoundedError implements IFailure {
+  @override
+  String? message;
+  @override
   StackTrace? stackTrace;
 
   NotFoundedError({

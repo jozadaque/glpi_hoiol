@@ -51,7 +51,7 @@ void main() {
         'Should return a state of loading and Exception to GetCategory Event  ',
         build: () {
           when(() => ticketUsecase.getCategories())
-              .thenAnswer((_) async => left(IFailure()));
+              .thenAnswer((_) async => left(const IFailure()));
           return CategoryBloc(ticketUsecase);
         },
         act: ((bloc) => bloc.add(GetCategories())),
@@ -64,7 +64,7 @@ void main() {
       'Should return a state of loading and Exception to GetCategoryById Event ',
       build: () {
         when(() => ticketUsecase.getCategoriesById(1))
-            .thenAnswer((_) async => left(IFailure()));
+            .thenAnswer((_) async => left(const IFailure()));
         return CategoryBloc(ticketUsecase);
       },
       act: ((bloc) => bloc.add(GetCategoryById(1))),

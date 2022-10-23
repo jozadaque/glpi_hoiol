@@ -1,3 +1,4 @@
+import 'package:glpi_hoiol/app/core/errors/i_failure.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/entity/ticket_entity.dart';
 
 abstract class TicketState {}
@@ -19,11 +20,7 @@ class SuccessTicketIDState implements TicketState {
 }
 
 class ExceptionTicketState implements TicketState {
-  final String mensage;
-  final StackTrace? stackTrace;
+  final IFailure exception;
 
-  ExceptionTicketState({
-    required this.mensage,
-    this.stackTrace,
-  });
+  ExceptionTicketState(this.exception);
 }

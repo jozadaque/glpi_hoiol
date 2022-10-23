@@ -50,7 +50,7 @@ void main() {
         'Should return a state of loading and Exception to GetTicketEvent  ',
         build: () {
           when(() => ticketUsecase.getTickets())
-              .thenAnswer((_) async => left(IFailure()));
+              .thenAnswer((_) async => left(const IFailure()));
           return TicketBloc(ticketUsecase);
         },
         act: ((bloc) => bloc.add(GetTickets())),
@@ -63,7 +63,7 @@ void main() {
         'Should return a state of loading and Exception to GetTicketByIdEvent ',
         build: () {
           when(() => ticketUsecase.getTicketById(1))
-              .thenAnswer((_) async => left(IFailure()));
+              .thenAnswer((_) async => left(const IFailure()));
           return TicketBloc(ticketUsecase);
         },
         act: ((bloc) => bloc.add(GetTicketById(1))),

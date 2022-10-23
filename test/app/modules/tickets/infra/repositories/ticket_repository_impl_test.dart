@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:glpi_hoiol/app/core/errors/i_failure.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/entity/itil_category_entity.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/entity/ticket_entity.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/errors/tickets_erros.dart';
-
 import 'package:glpi_hoiol/app/modules/tickets/infra/datasources/i_ticket_datasource.dart';
 import 'package:glpi_hoiol/app/modules/tickets/infra/entity/itil_categories.dart';
 import 'package:glpi_hoiol/app/modules/tickets/infra/entity/ticket_entity.dart';
@@ -19,11 +19,11 @@ void main() {
   });
 
   group('TicketRepository - Success', () {
-    test('Should return a List to TicketEnity', () async {
+    test('Should return a List to Ticket', () async {
       when(() => datasource.getTickets()).thenAnswer((_) async => tickets);
       final response = await repository.getTickets();
 
-      expect(response.fold((l) => l, (r) => r), isA<List<TicketEntity>>());
+      expect(response.fold((l) => l, (r) => r), isA<List<Ticket>>());
     });
 
     test('Should return a List to CategoryEntities', () async {
@@ -60,25 +60,24 @@ void main() {
       expect(response.fold((l) => l, (r) => r), isA<ListTicketError>());
     });
 
-    test('Should return a ListTicketError to getCategories method', () async {
-      when(() => repository.getCategories()).thenThrow(ListCategoryError());
+    test('Should return a ListCategoryError to getCategories method', () async {
+      when(() => datasource.getCategories()).thenThrow(const IFailure());
 
       final response = await repository.getCategories();
 
       expect(response.fold((l) => l, (r) => r), isA<ListCategoryError>());
     });
 
-    test('Should return a ListTicketError to getTicketsById method', () async {
-      when(() => repository.getTicketById(0)).thenThrow(TicketError());
+    test('Should return a TicketError to getTicketsById method', () async {
+      when(() => datasource.getTicketById(0)).thenThrow(const IFailure());
 
       final response = await repository.getTicketById(0);
 
       expect(response.fold((l) => l, (r) => r), isA<TicketError>());
     });
 
-    test('Should return a ListTicketError to getCategoriesById method',
-        () async {
-      when(() => repository.getCategoriesById(0)).thenThrow(CategoryError());
+    test('Should return a CategoryError to getCategoriesById method', () async {
+      when(() => datasource.getCategoryById(0)).thenThrow(const IFailure());
 
       final response = await repository.getCategoriesById(0);
 
