@@ -2,7 +2,7 @@ class TicketEntity {
   final int? id;
   final String name;
   final String date;
-  final int status;
+  final dynamic status;
   final String content;
   final int priority;
   final dynamic itilCategory;

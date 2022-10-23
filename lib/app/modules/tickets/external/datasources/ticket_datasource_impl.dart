@@ -13,19 +13,20 @@ class TicketDatasourceImpl implements ITicketDatasource {
   @override
   Future<List<Ticket>> getTickets() async {
     try {
-      final response = await dio.get('$appUrl/Ticket',
+      final response = await dio.get('$appUrl/Ticket?order=DESC',
           options: Options(headers: {'Session-Token': authToken}));
       final list = response.data as List;
-      final tickets = list
-          .map((data) => Ticket(
-              id: data['id'],
-              name: data['name'],
-              date: data['date'],
-              status: data['status'],
-              content: data['content'],
-              priority: data['priority'],
-              itilCategory: _getNameCategory(data['itilcategories_id'])))
-          .toList();
+      final tickets = list.map((data) {
+        return Ticket(
+            id: data['id'],
+            name: data['name'],
+            date: data['date'],
+            status: status[data['status']],
+            content: data['content'],
+            priority: data['priority'],
+            itilCategory:
+                _getNameCategory(data['itilcategories_id']).toString());
+      }).toList();
 
       return tickets;
     } on DioError catch (e, s) {
@@ -95,7 +96,10 @@ class TicketDatasourceImpl implements ITicketDatasource {
       final response = await dio.get('$appUrl/ITILCategory/$id',
           options: Options(headers: {'Session-Token': authToken}));
       final data = response.data;
-      return ItilCategories(id: data['id'], name: data['name']);
+      return ItilCategories(
+        id: data['id'],
+        name: data['name'],
+      );
     } on DioError catch (e, s) {
       if (e.response != null) {
         if (e.response!.statusCode == 401) {
@@ -108,7 +112,10 @@ class TicketDatasourceImpl implements ITicketDatasource {
     }
   }
 
-  _getNameCategory(int id) async {
+  Future<String> _getNameCategory(int id) async {
+    if (id == 0) {
+      return '';
+    }
     final ItilCategories category = await getCategoryById(id);
     return category.name;
   }

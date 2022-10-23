@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/errors/tickets_erros.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/usecase/ticket_usecase.dart';

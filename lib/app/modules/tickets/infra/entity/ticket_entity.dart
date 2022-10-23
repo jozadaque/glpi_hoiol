@@ -8,7 +8,7 @@ class Ticket implements TicketEntity {
   @override
   final String date;
   @override
-  final int status;
+  final dynamic status;
   @override
   final String content;
   @override
