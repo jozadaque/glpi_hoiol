@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/ticket_bloc/ticket_event.dart';
 import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/ticket_bloc/ticket_state.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import '../../../../../core/constants/constants.dart';
 import '../bloc/ticket_bloc/ticket_bloc.dart';
 
@@ -19,6 +21,7 @@ class _TicketsPageState extends State<TicketsPage> {
   @override
   void initState() {
     super.initState();
+    initializeDateFormatting('pt_BR');
     bloc = Modular.get<TicketBloc>();
     bloc.add(GetTickets());
   }
@@ -62,12 +65,33 @@ class _TicketsPageState extends State<TicketsPage> {
                     child: ListTile(
                       leading: Text(state.tickets[i].id.toString()),
                       title: Text(state.tickets[i].name),
-                      trailing: Text(state.tickets[i].status.toString()),
-                      subtitle: Text(state.tickets[i].date),
+                      trailing: Container(
+                        decoration: BoxDecoration(
+                            color: prioriyColor[state.tickets[i].priority],
+                            borderRadius: BorderRadius.circular(10)),
+                        padding: const EdgeInsets.all(3),
+                        width: 50,
+                        height: 30,
+                        child: Center(
+                          child: Text(prioriyStatus[state.tickets[i].priority]
+                              .toString()),
+                        ),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
+                          children: [
+                            Text(state.tickets[i].status),
+                            const SizedBox(width: 10),
+                            Text(DateFormat.yMMMMd('pt_BR')
+                                .format(DateTime.parse(state.tickets[i].date))
+                                .toString()),
+                          ],
+                        ),
+                      ),
                       dense: false,
                       isThreeLine: true,
                       horizontalTitleGap: 4,
-                      tileColor: prioriyColor[state.tickets[i].priority],
                       onTap: () {},
                       shape: RoundedRectangleBorder(
                         side: BorderSide(

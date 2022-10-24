@@ -13,9 +13,17 @@ final status = {
 };
 
 final prioriyColor = {
-  1: const Color.fromARGB(125, 250, 247, 255),
+  1: const Color.fromARGB(124, 167, 212, 95),
   2: const Color.fromARGB(124, 206, 241, 5),
-  3: const Color.fromARGB(124, 252, 5, 5),
-  4: const Color.fromARGB(124, 39, 170, 13),
+  3: const Color.fromARGB(123, 170, 197, 135),
+  4: const Color.fromARGB(151, 224, 13, 13),
   5: const Color.fromARGB(124, 0, 247, 255),
+};
+
+final prioriyStatus = {
+  1: 'Muito Baixa',
+  2: 'Baixa',
+  3: 'Media',
+  4: 'Alta',
+  5: 'Muito Alta',
 };
