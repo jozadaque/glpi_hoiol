@@ -1,7 +1,7 @@
 import 'package:flutter/rendering.dart';
 
 const String appUrl = 'http://191.7.192.130:11040/ti/apirest.php';
-String authToken = 'u6t1f912k9l3t4men85j5pgple';
+String authToken = 'tmni28v2dhtauv22pblbi16hsr';
 
 final status = {
   1: 'Novo',

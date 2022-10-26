@@ -6,14 +6,14 @@ import 'package:glpi_hoiol/app/modules/tickets/infra/entity/ticket_entity.dart';
 import 'package:glpi_hoiol/app/modules/tickets/infra/entity/itil_categories.dart';
 
 class TicketDatasourceImpl implements ITicketDatasource {
-  final Dio dio;
+  final Dio _dio;
 
-  TicketDatasourceImpl(this.dio);
+  TicketDatasourceImpl(this._dio);
 
   @override
   Future<List<Ticket>> getTickets() async {
     try {
-      final response = await dio.get('$appUrl/Ticket?order=DESC',
+      final response = await _dio.get('$appUrl/Ticket?order=DESC',
           options: Options(headers: {'Session-Token': authToken}));
       final list = response.data as List;
       final tickets = list.map((data) {
@@ -45,7 +45,7 @@ class TicketDatasourceImpl implements ITicketDatasource {
   @override
   Future<List<ItilCategories>> getCategories() async {
     try {
-      final response = await dio.get('$appUrl/ITILCategory',
+      final response = await _dio.get('$appUrl/ITILCategory',
           options: Options(headers: {'Session-Token': authToken}));
 
       final list = response.data as List;
@@ -64,7 +64,7 @@ class TicketDatasourceImpl implements ITicketDatasource {
   @override
   Future<Ticket> getTicketById(int id) async {
     try {
-      final response = await dio.get('$appUrl/Ticket/$id',
+      final response = await _dio.get('$appUrl/Ticket/$id',
           options: Options(headers: {'Session-Token': authToken}));
       final data = response.data;
 
@@ -93,7 +93,7 @@ class TicketDatasourceImpl implements ITicketDatasource {
   @override
   Future<ItilCategories> getCategoryById(int id) async {
     try {
-      final response = await dio.get('$appUrl/ITILCategory/$id',
+      final response = await _dio.get('$appUrl/ITILCategory/$id',
           options: Options(headers: {'Session-Token': authToken}));
       final data = response.data;
       return ItilCategories(

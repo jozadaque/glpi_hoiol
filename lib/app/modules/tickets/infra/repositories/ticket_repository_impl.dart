@@ -10,14 +10,14 @@ import 'package:glpi_hoiol/app/modules/tickets/domain/repositories/i_ticket_repo
 import '../datasources/i_ticket_datasource.dart';
 
 class TicketRepositoryImpl extends ITicketRepository {
-  final ITicketDatasource datasource;
+  final ITicketDatasource _datasource;
 
-  TicketRepositoryImpl(this.datasource);
+  TicketRepositoryImpl(this._datasource);
 
   @override
   Future<Either<IFailure, List<TicketEntity>>> getTickets() async {
     try {
-      final response = await datasource.getTickets();
+      final response = await _datasource.getTickets();
 
       return right(response);
     } on ListTicketError catch (e) {
@@ -29,7 +29,7 @@ class TicketRepositoryImpl extends ITicketRepository {
   @override
   Future<Either<IFailure, List<ItilCategoryEntity>>> getCategories() async {
     try {
-      final response = await datasource.getCategories();
+      final response = await _datasource.getCategories();
       return right(response);
     } on IFailure catch (e) {
       return left(ListCategoryError(message: e.message.toString()));
@@ -39,7 +39,7 @@ class TicketRepositoryImpl extends ITicketRepository {
   @override
   Future<Either<IFailure, TicketEntity>> getTicketById(int id) async {
     try {
-      final response = await datasource.getTicketById(id);
+      final response = await _datasource.getTicketById(id);
       return right(response);
     } on IFailure catch (e) {
       return left(TicketError(message: e.message.toString()));
@@ -49,7 +49,7 @@ class TicketRepositoryImpl extends ITicketRepository {
   @override
   Future<Either<IFailure, ItilCategoryEntity>> getCategoriesById(int id) async {
     try {
-      final response = await datasource.getCategoryById(id);
+      final response = await _datasource.getCategoryById(id);
       return right(response);
     } on IFailure catch (e) {
       return left(CategoryError(message: e.message.toString()));

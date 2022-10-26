@@ -87,7 +87,7 @@ void main() {
   group('TicketDataSourceImpl - Fail', () {
     test('Should return a NotFoundedError to getTickets method', () async {
       dioAdapter.onGet(
-        '$appUrl/Ticket',
+        '$appUrl/Ticket?order=DESC',
         (server) => server.reply(0, null, delay: const Duration(seconds: 1)),
       );
 

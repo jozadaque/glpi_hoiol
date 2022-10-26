@@ -13,31 +13,31 @@ abstract class ITicketUsecase {
 }
 
 class TicketUsecase implements ITicketUsecase {
-  final ITicketRepository repository;
+  final ITicketRepository _repository;
 
-  TicketUsecase(this.repository);
+  TicketUsecase(this._repository);
   @override
   Future<Either<IFailure, TicketEntity>> getTicketById(int id) async {
-    final response = await repository.getTicketById(id);
+    final response = await _repository.getTicketById(id);
     return response;
   }
 
   @override
   Future<Either<IFailure, List<TicketEntity>>> getTickets() async {
-    final response = await repository.getTickets();
+    final response = await _repository.getTickets();
 
     return response;
   }
 
   @override
   Future<Either<IFailure, List<ItilCategoryEntity>>> getCategories() async {
-    final response = await repository.getCategories();
+    final response = await _repository.getCategories();
     return response;
   }
 
   @override
   Future<Either<IFailure, ItilCategoryEntity>> getCategoriesById(int id) async {
-    final response = await repository.getCategoriesById(id);
+    final response = await _repository.getCategoriesById(id);
     return response;
   }
 }
