@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/ticket_bloc/ticket_event.dart';
-import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/ticket_bloc/ticket_state.dart';
+import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/tickets_bloc/ticket_event.dart';
+import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/tickets_bloc/ticket_state.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import '../../../../../core/constants/constants.dart';
-import '../bloc/ticket_bloc/ticket_bloc.dart';
+import '../bloc/tickets_bloc/ticket_bloc.dart';
 
 class TicketsPage extends StatefulWidget {
   const TicketsPage({super.key});
@@ -16,19 +16,19 @@ class TicketsPage extends StatefulWidget {
 }
 
 class _TicketsPageState extends State<TicketsPage> {
-  late TicketBloc bloc;
+  late TicketBloc blocTickets;
 
   @override
   void initState() {
     super.initState();
     initializeDateFormatting('pt_BR');
-    bloc = Modular.get<TicketBloc>();
-    bloc.add(GetTickets());
+    blocTickets = Modular.get<TicketBloc>();
+    blocTickets.add(GetTickets());
   }
 
   @override
   void dispose() {
-    bloc.close();
+    blocTickets.close();
     super.dispose();
   }
 
@@ -39,7 +39,7 @@ class _TicketsPageState extends State<TicketsPage> {
         title: const Text('Meus Chamados'),
       ),
       body: BlocBuilder<TicketBloc, TicketState>(
-          bloc: bloc,
+          bloc: blocTickets,
           builder: (context, state) {
             if (state is InitialTicketState) {
               return const Text('GLPI');
@@ -92,7 +92,10 @@ class _TicketsPageState extends State<TicketsPage> {
                       dense: false,
                       isThreeLine: true,
                       horizontalTitleGap: 4,
-                      onTap: () {},
+                      onTap: () {
+                        Modular.to
+                            .pushNamed('/ticket', arguments: state.tickets[i]);
+                      },
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           color: Theme.of(context).colorScheme.outline,

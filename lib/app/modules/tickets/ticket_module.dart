@@ -5,8 +5,10 @@ import 'package:glpi_hoiol/app/modules/tickets/domain/usecase/ticket_usecase.dar
 import 'package:glpi_hoiol/app/modules/tickets/external/datasources/ticket_datasource_impl.dart';
 import 'package:glpi_hoiol/app/modules/tickets/infra/datasources/i_ticket_datasource.dart';
 import 'package:glpi_hoiol/app/modules/tickets/infra/repositories/ticket_repository_impl.dart';
-import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/ticket_bloc/ticket_bloc.dart';
+import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/tickets_bloc/ticket_bloc.dart';
 import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/pages/tickets_page.dart';
+
+import 'presenter/ui/pages/ticket_page.dart';
 
 class TicketModule extends Module {
   @override
@@ -21,5 +23,9 @@ class TicketModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (context, args) => const TicketsPage()),
+        ChildRoute('/ticket',
+            child: (context, args) => TicketPage(
+                  ticket: args.data,
+                )),
       ];
 }

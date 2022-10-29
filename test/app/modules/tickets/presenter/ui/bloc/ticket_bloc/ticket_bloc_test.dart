@@ -5,9 +5,9 @@ import 'package:glpi_hoiol/app/core/errors/i_failure.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/usecase/ticket_usecase.dart';
 import 'package:glpi_hoiol/app/modules/tickets/infra/entity/itil_categories.dart';
 import 'package:glpi_hoiol/app/modules/tickets/infra/entity/ticket_entity.dart';
-import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/ticket_bloc/ticket_bloc.dart';
-import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/ticket_bloc/ticket_event.dart';
-import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/ticket_bloc/ticket_state.dart';
+import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/tickets_bloc/ticket_bloc.dart';
+import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/tickets_bloc/ticket_event.dart';
+import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/tickets_bloc/ticket_state.dart';
 import 'package:mocktail/mocktail.dart';
 
 void main() {
