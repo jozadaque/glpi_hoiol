@@ -11,6 +11,6 @@ class AppModule extends Module {
   List<ModularRoute> get routes => [
         ModuleRoute(Modular.initialRoute, module: AuthModule()),
         ModuleRoute('/login/', module: AuthModule()),
-        ModuleRoute('/ticket/', module: TicketModule()),
+        ModuleRoute('/tickets/', module: TicketModule()),
       ];
 }

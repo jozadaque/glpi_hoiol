@@ -127,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                 }
                 if (state is SuccessLoginState) {
                   ScaffoldMessenger.of(context).clearSnackBars();
-                  Modular.to.pushReplacementNamed('/ticket/');
+                  Modular.to.pushReplacementNamed('/tickets/');
                 }
                 return Container();
               }),

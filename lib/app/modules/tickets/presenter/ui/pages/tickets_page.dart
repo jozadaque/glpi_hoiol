@@ -93,8 +93,8 @@ class _TicketsPageState extends State<TicketsPage> {
                       isThreeLine: true,
                       horizontalTitleGap: 4,
                       onTap: () {
-                        Modular.to
-                            .pushNamed('/ticket/', arguments: state.tickets[i]);
+                        Modular.to.pushNamed('/tickets/ticket/',
+                            arguments: state.tickets[i]);
                       },
                       shape: RoundedRectangleBorder(
                         side: BorderSide(

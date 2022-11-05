@@ -56,7 +56,7 @@ class _TicketPageState extends State<TicketPage> {
                   child: ButtonWidget(
                       label: 'Voltar',
                       onPressed: () {
-                        Modular.to.navigate('/');
+                        Modular.to.navigate('/tickets/');
                       }),
                 ),
               ],
