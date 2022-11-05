@@ -3,7 +3,7 @@ class HtmlConverte {
     final text = content
         .replaceAll('&#60;', '<')
         .replaceAll('&#62;', '>')
-        .replaceAll('&#gt;', '>');
+        .replaceAll('&gt;', '>');
 
     return text;
   }
