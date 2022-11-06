@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:glpi_hoiol/app/core/constants/constants.dart';
+import 'package:glpi_hoiol/app/core/constants/app_constants.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/errors/tickets_erros.dart';
 import 'package:glpi_hoiol/app/modules/tickets/infra/datasources/i_ticket_datasource.dart';
 import 'package:glpi_hoiol/app/modules/tickets/infra/entity/ticket_entity.dart';

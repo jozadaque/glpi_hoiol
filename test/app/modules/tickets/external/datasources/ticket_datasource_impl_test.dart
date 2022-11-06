@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:glpi_hoiol/app/core/constants/constants.dart';
+import 'package:glpi_hoiol/app/core/constants/app_constants.dart';
 import 'package:glpi_hoiol/app/modules/tickets/domain/errors/tickets_erros.dart';
 import 'package:glpi_hoiol/app/modules/tickets/external/datasources/ticket_datasource_impl.dart';
 import 'package:glpi_hoiol/app/modules/tickets/infra/entity/ticket_entity.dart';

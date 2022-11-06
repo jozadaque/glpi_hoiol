@@ -1,4 +1,4 @@
-abstract class AuthEvent {}
+import '../auth_event.dart';
 
 class LogoutEvent implements AuthEvent {
   final String token;

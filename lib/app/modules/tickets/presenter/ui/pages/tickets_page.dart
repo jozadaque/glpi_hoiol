@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/logout_bloc/logout_bloc.dart';
+import 'package:glpi_hoiol/app/modules/auth/presenter/ui/bloc/logout_bloc/logout_event.dart';
 import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/tickets_bloc/ticket_event.dart';
 import 'package:glpi_hoiol/app/modules/tickets/presenter/ui/bloc/tickets_bloc/ticket_state.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import '../../../../../core/constants/constants.dart';
+import '../../../../../core/constants/app_constants.dart';
 import '../bloc/tickets_bloc/ticket_bloc.dart';
 
 class TicketsPage extends StatefulWidget {
@@ -17,18 +19,21 @@ class TicketsPage extends StatefulWidget {
 
 class _TicketsPageState extends State<TicketsPage> {
   late TicketBloc blocTickets;
+  late LogoutBloc bloclogin;
 
   @override
   void initState() {
     super.initState();
     initializeDateFormatting('pt_BR');
     blocTickets = Modular.get<TicketBloc>();
+    bloclogin = Modular.get<LogoutBloc>();
     blocTickets.add(GetTickets());
   }
 
   @override
   void dispose() {
     blocTickets.close();
+    bloclogin.close();
     super.dispose();
   }
 
@@ -37,6 +42,15 @@ class _TicketsPageState extends State<TicketsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Meus Chamados'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                bloclogin.add(LogoutEvent(authToken));
+                authToken = '';
+                Modular.to.pushNamed('/');
+              },
+              icon: const Icon(Icons.power_settings_new))
+        ],
       ),
       body: BlocBuilder<TicketBloc, TicketState>(
           bloc: blocTickets,

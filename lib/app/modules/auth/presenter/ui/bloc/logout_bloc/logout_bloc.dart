@@ -3,6 +3,7 @@ import 'package:glpi_hoiol/app/core/constants/app_constants.dart';
 import 'package:glpi_hoiol/app/modules/auth/domain/usecases/login_usecase.dart';
 import 'package:glpi_hoiol/app/modules/auth/exceptions/login_exception.dart';
 
+import '../auth_event.dart';
 import '../auth_state.dart';
 
 import 'logout_event.dart';
